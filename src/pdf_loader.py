@@ -6,16 +6,9 @@ from pathlib import Path
 
 from ragbits.core.vector_stores.qdrant import QdrantVectorStore
 from ragbits.core.vector_stores.in_memory import InMemoryVectorStore
-from ragbits.core.embeddings.litellm import LiteLLMEmbeddings
+from ragbits.core.embeddings.litellm import LiteLLMEmbedder
 from ragbits.document_search import DocumentSearch
 from ragbits.document_search.documents.sources import LocalFileSource
-from ragbits.document_search.ingestion.document_processor import DocumentProcessorRouter
-from ragbits.document_search.documents.document import DocumentType
-from ragbits.document_search.ingestion.providers.unstructured import UnstructuredDefaultProvider, UnstructuredPdfProvider
-from ragbits.document_search.documents.document import DocumentMeta
-from ragbits.core.vector_stores.base import WhereQuery, VectorStoreOptions
-from ragbits.core.audit import traceable
-from ragbits.document_search.ingestion.processor_strategies.distributed import DistributedProcessing
 
 from config import QDRANT_URL, COLLECTION_NAME, MODEL_NAME, DOCUMENTS_PATH, OPENAI_API_KEY
 
@@ -26,11 +19,13 @@ async def ingest_documents(documents: Sequence["LocalFileSource"], document_sear
     print(f"Sending {len(documents)} documents to Qdrant")
     await document_search.ingest(documents)
 
+
 async def get_limit(client):
     return (await client.count(collection_name=COLLECTION_NAME)).count
 
-def ingest_pdf_documents() -> None:
-    embedder = LiteLLMEmbeddings(
+
+async def ingest_pdf_documents() -> None:
+    embedder = LiteLLMEmbedder(
         model="text-embedding-3-small",
     )
 
@@ -38,10 +33,10 @@ def ingest_pdf_documents() -> None:
     vector_store = QdrantVectorStore(
         client=qdrant_client,
         index_name=COLLECTION_NAME,
+        embedder=embedder
     )
 
     document_search = DocumentSearch(
-        embedder=embedder,
         vector_store=vector_store,
     )
 
@@ -50,7 +45,7 @@ def ingest_pdf_documents() -> None:
         raise ValueError("No documents found")
     else:
         print(f"Ingesting {len(documents)} documents...")
-        asyncio.run(ingest_documents(documents, document_search))
+        await ingest_documents(documents, document_search)
 
 
 # def prepare_qdrant() -> None:
@@ -68,7 +63,4 @@ def ingest_pdf_documents() -> None:
 #     print(collection_info)
 
 if __name__ == "__main__":
-
-    print(ingest_pdf_documents())
-
-
+    asyncio.run(ingest_pdf_documents())

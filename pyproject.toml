@@ -1,0 +1,18 @@
+[project]
+name = "fdds-rag"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "ragbits-core[qdrant]",
+    "ragbits-document-search[gcs,azure]",
+    "ragbits-cli",
+    "unstructured[md,pdf]>=0.16.14",
+]
+
+[tool.uv.sources]
+ragbits = { path = "../../oss/ragbits/packages/ragbits" }
+ragbits-core = { path = "../../oss/ragbits/packages/ragbits-core" }
+ragbits-document-search = { path = "../../oss/ragbits/packages/ragbits-document-search" }
+ragbits-cli = { path = "../../oss/ragbits/packages/ragbits-cli" }
