@@ -1,0 +1,31 @@
+# Byte-compiled / optimized / DLL files
+
+pycache/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+
+venv/
+.env
+
+# Docker
+
+*.log
+*.pid
+
+# Jupyter Notebooks
+
+.ipynb_checkpoints/
+
+# OS and editor files
+
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Dependencies
+
+*.egg-info/
+*.lock
