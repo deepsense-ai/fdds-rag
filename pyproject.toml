@@ -9,10 +9,11 @@ dependencies = [
     "ragbits-document-search[gcs,azure]",
     "ragbits-cli",
     "unstructured[md,pdf]>=0.16.14",
+    "pre-commit>=4.1.0",
 ]
 
 [tool.uv.sources]
-ragbits = { path = "../../oss/ragbits/packages/ragbits" }
-ragbits-core = { path = "../../oss/ragbits/packages/ragbits-core" }
-ragbits-document-search = { path = "../../oss/ragbits/packages/ragbits-document-search" }
-ragbits-cli = { path = "../../oss/ragbits/packages/ragbits-cli" }
+ragbits = { path = "../ragbits/packages/ragbits" }
+ragbits-core = { path = "../ragbits/packages/ragbits-core" }
+ragbits-document-search = { path = "../ragbits/packages/ragbits-document-search" }
+ragbits-cli = { path = "../ragbits/packages/ragbits-cli" }
