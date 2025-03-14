@@ -1,6 +1,7 @@
 # fdds-rag
 
 ### Project Structure
+```
 .
 ├── docker-compose.yml
 ├── src
@@ -16,6 +17,7 @@
 ├── .pre-commit-config.yaml
 ├── README.md
 └── uv.lock
+```
 ## Key Components
 - `docker-compose.yml` configures the Qdrant service and manages local volumes.
 - `src/inference.py` contains methods to process a query and generate responses based on contextual data using RAG.
@@ -51,6 +53,7 @@ pre-commit install
 Ensure you created a `.env` file in the project root directory with all needed variables which are listed below:
 ```
 API_KEY=<your_api_key>
+COHERE_API_KEY=<your_api_key>
 ```
 Replace the placeholders with your actual credentials and settings, and modify src/config.py to ensure it holds all necessary configurations like paths and connection details.
 ### 5. Start the Qdrant service:
@@ -65,5 +68,5 @@ uv run src/pdf_loader.py
 ```
 ### 7. Run a query with the RAG model:
 ```bash
-uv run src/inference.py "<query>"
+uv run src/inference.py
 ```
