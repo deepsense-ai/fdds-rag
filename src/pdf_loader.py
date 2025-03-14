@@ -6,8 +6,10 @@ from ragbits.core.embeddings.litellm import LiteLLMEmbedder
 from ragbits.core.vector_stores.qdrant import QdrantVectorStore
 from ragbits.document_search import DocumentSearch
 from ragbits.document_search.documents.sources import LocalFileSource
+from ragbits.document_search.documents.element import IntermediateImageElement
 
 from config import Config
+from handlers import NoImageIntermediateHandler
 
 
 async def ingest_documents(
@@ -69,6 +71,9 @@ async def ingest_pdf_documents() -> None:
     )
     document_search = DocumentSearch(
         vector_store=vector_store,
+        intermediate_element_handlers={
+            IntermediateImageElement: NoImageIntermediateHandler()
+        },
     )
     documents = LocalFileSource.list_sources(
         Config.DOCUMENTS_PATH, file_pattern="*.pdf"
