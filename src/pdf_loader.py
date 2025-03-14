@@ -7,7 +7,7 @@ from ragbits.core.vector_stores.qdrant import QdrantVectorStore
 from ragbits.document_search import DocumentSearch
 from ragbits.document_search.documents.sources import LocalFileSource
 
-from config import COLLECTION_NAME, DOCUMENTS_PATH, EMBEDDING_MODEL, QDRANT_URL
+from config import Config
 
 
 async def ingest_documents(
@@ -59,18 +59,20 @@ async def ingest_pdf_documents() -> None:
 
     """
     embedder = LiteLLMEmbedder(
-        model=EMBEDDING_MODEL,
+        model=Config.EMBEDDING_MODEL,
     )
-    qdrant_client = AsyncQdrantClient(url=QDRANT_URL)
+    qdrant_client = AsyncQdrantClient(url=Config.QDRANT_URL)
     vector_store = QdrantVectorStore(
         client=qdrant_client,
-        index_name=COLLECTION_NAME,
+        index_name=Config.COLLECTION_NAME,
         embedder=embedder,
     )
     document_search = DocumentSearch(
         vector_store=vector_store,
     )
-    documents = LocalFileSource.list_sources(DOCUMENTS_PATH, file_pattern="*.pdf")
+    documents = LocalFileSource.list_sources(
+        Config.DOCUMENTS_PATH, file_pattern="*.pdf"
+    )
 
     if len(documents) == 0:
         raise ValueError("No documents found")
@@ -81,4 +83,5 @@ async def ingest_pdf_documents() -> None:
 
 
 if __name__ == "__main__":
+    Config.validate()
     asyncio.run(ingest_pdf_documents())
