@@ -69,5 +69,5 @@ uv run src/pdf_loader.py
 ```
 ### 7. Run a query with the RAG model:
 ```bash
-uv run src/inference.py
+uv run src/inference.py "<Your query here>"
 ```
