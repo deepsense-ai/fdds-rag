@@ -11,6 +11,8 @@ from ragbits.document_search.documents.element import IntermediateImageElement
 from config import Config
 from handlers import NoImageIntermediateHandler
 
+config = Config()
+
 
 async def ingest_documents(
     documents: Sequence["LocalFileSource"], document_search: DocumentSearch
@@ -61,12 +63,12 @@ async def ingest_pdf_documents() -> None:
 
     """
     embedder = LiteLLMEmbedder(
-        model=Config.EMBEDDING_MODEL,
+        model=config.EMBEDDING_MODEL,
     )
-    qdrant_client = AsyncQdrantClient(url=Config.QDRANT_URL)
+    qdrant_client = AsyncQdrantClient(url=config.QDRANT_URL)
     vector_store = QdrantVectorStore(
         client=qdrant_client,
-        index_name=Config.COLLECTION_NAME,
+        index_name=config.COLLECTION_NAME,
         embedder=embedder,
     )
     document_search = DocumentSearch(
@@ -76,7 +78,7 @@ async def ingest_pdf_documents() -> None:
         },
     )
     documents = LocalFileSource.list_sources(
-        Config.DOCUMENTS_PATH, file_pattern="*.pdf"
+        config.DOCUMENTS_PATH, file_pattern="*.pdf"
     )
 
     if len(documents) == 0:
@@ -88,5 +90,4 @@ async def ingest_pdf_documents() -> None:
 
 
 if __name__ == "__main__":
-    Config.validate()
     asyncio.run(ingest_pdf_documents())

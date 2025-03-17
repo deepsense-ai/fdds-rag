@@ -12,6 +12,8 @@ from ragbits.document_search.retrieval.rerankers.litellm import LiteLLMReranker
 
 from config import Config
 
+config = Config()
+
 
 class QueryWithContext(BaseModel):
     """
@@ -93,15 +95,15 @@ async def get_contexts(question: str, top_k: int, top_n: int) -> list[str]:
         - LiteLLMReranker: Reranks the retrieved contexts for better relevance.
     """
     embedder = LiteLLMEmbedder(
-        model=Config.EMBEDDING_MODEL,
+        model=config.EMBEDDING_MODEL,
     )
-    qdrant_client = AsyncQdrantClient(url=Config.QDRANT_URL)
+    qdrant_client = AsyncQdrantClient(url=config.QDRANT_URL)
     vector_store = QdrantVectorStore(
         client=qdrant_client,
-        index_name=Config.COLLECTION_NAME,
+        index_name=config.COLLECTION_NAME,
         embedder=embedder,
     )
-    reranker = LiteLLMReranker(Config.RERANKER_MODEL)
+    reranker = LiteLLMReranker(config.RERANKER_MODEL)
     document_search = DocumentSearch(vector_store=vector_store, reranker=reranker)
     contexts = await document_search.search(
         question,
@@ -114,19 +116,20 @@ async def get_contexts(question: str, top_k: int, top_n: int) -> list[str]:
     return texts
 
 
-async def inference(query: str) -> str:
+async def inference(query: str) -> None:
     """
     Generate an AI-powered response to a query using retrieval-augmented generation.
 
     This function retrieves relevant contexts for the input query,
     constructs a prompt using the `RAGPrompt` class,
     and generates a response using a language model.
+    The response is printed in real-time directly to the console.
 
     Args:
         query (str): The user’s question or input.
 
     Returns:
-        str: The generated response from the language model.
+        None
 
     Dependencies:
         - LiteLLM:
@@ -136,11 +139,17 @@ async def inference(query: str) -> str:
         - RAGPrompt:
             Creates a structured prompt with the query and contexts.
     """
-    llm = LiteLLM(model_name=Config.MODEL_NAME, api_key=Config.OPENAI_API_KEY)
-    context = await get_contexts(query, top_k=Config.TOP_K, top_n=Config.TOP_N)
-    prompt = RAGPrompt(QueryWithContext(query=query, context=context))
-    response = await llm.generate(prompt)
-    return response
+
+    context = await get_contexts(query, top_k=config.TOP_K, top_n=config.TOP_N)
+    llm = LiteLLM(model_name=config.MODEL_NAME, api_key=config.OPENAI_API_KEY)
+    stream = llm.generate_streaming(
+        prompt=RAGPrompt(QueryWithContext(query=query, context=context)),
+    )
+
+    async for chunk in stream:
+        print(chunk, end="")
+        sys.stdout.flush()
+    print()
 
 
 def parse_query() -> str:
@@ -170,9 +179,8 @@ async def main() -> None:
     Returns:
         None
     """
-    Config.validate()
     query = parse_query()
-    print(await inference(query), "\n")
+    await inference(query)
 
 
 if __name__ == "__main__":
