@@ -8,6 +8,7 @@
 │   ├── __init__.py
 │   ├── inference.py
 │   ├── pdf_loader.py
+│   ├── handlers.py
 │   └── config.py
 ├── data
 │   ├── qdrant
@@ -19,12 +20,12 @@
 └── uv.lock
 ```
 ## Key Components
+- `data/pdfs`: directory for storing your PDF files.
+- `data/qdrant`: local volume for Qdrant's data persistence.
 - `docker-compose.yml` configures the Qdrant service and manages local volumes.
 - `src/inference.py` contains methods to process a query and generate responses based on contextual data using RAG.
 - `src/pdf_loader.py` loads and processes PDF files from the `data/pdfs` directory into Qdrant.
 - `src/config.py` holds configuration settings for the project.
-- `data/qdrant`: local volume for Qdrant's data persistence.
-- `data/pdfs`: directory for storing your PDF files.
 - `pyproject.toml` and `uv.lock`: configuration files for uv and project dependencies.
 - `.pre-commit-config.yaml`: configuration for pre-commit hooks to ensure code quality.
 
@@ -32,7 +33,7 @@
 - Python 3.11+
 - Docker and Docker Compose
 - Pre-commit
-- uv
+- uv (https://docs.astral.sh/uv/)
 
 ## Setup and Installation
 ### 1. Clone the repository:
