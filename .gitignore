@@ -1,0 +1,36 @@
+# Virtual environment directory
+
+venv/
+.venv
+
+# Byte-compiled / optimized / DLL files
+
+pycache/
+*.py[cod]
+*.pyo
+
+# Environment variables
+.env
+
+# Docker
+
+*.log
+*.pid
+
+# Jupyter Notebooks
+
+.ipynb_checkpoints/
+
+# IPython configuration
+profile_default/
+ipython_config.py
+
+# OS and editor files
+
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# pyenv Python version file
+.python-version
