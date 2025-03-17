@@ -1,4 +1,5 @@
 import asyncio
+import sys
 
 from pydantic import BaseModel
 from qdrant_client import AsyncQdrantClient
@@ -142,15 +143,36 @@ async def inference(query: str) -> str:
     return response
 
 
-async def main() -> None:
-    Config.validate()
-    questions = [
-        "Kto jest administratorem danych osobowych uczestników szkoleń?",
-    ]
+def parse_query() -> str:
+    """Parses the query from command line arguments.
 
-    for q in questions:
-        print(q)
-        print(await inference(q))
+    Returns:
+        str: The query string provided by the user.
+    """
+    if len(sys.argv) < 2:
+        print('Usage: uv run inference.py "<Your query here>"')
+        sys.exit(1)
+
+    return sys.argv[1]
+
+
+async def main() -> None:
+    """
+    Main function that orchestrates the inference process.
+
+    This function validates the configuration, parses the query, and
+    then performs inference asynchronously based on the parsed query.
+    The result of the inference is printed to the console.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
+    Config.validate()
+    query = parse_query()
+    print(await inference(query), "\n")
 
 
 if __name__ == "__main__":
