@@ -9,8 +9,9 @@ from ragbits.core.prompt import Prompt
 from ragbits.core.vector_stores.qdrant import QdrantVectorStore
 from ragbits.document_search import DocumentSearch, SearchConfig
 from ragbits.document_search.retrieval.rerankers.litellm import LiteLLMReranker
+from typing import AsyncGenerator
 
-from config import Config
+from src.config import Config
 
 config = Config()
 
@@ -116,40 +117,35 @@ async def get_contexts(question: str, top_k: int, top_n: int) -> list[str]:
     return texts
 
 
-async def inference(query: str) -> None:
+async def inference(query: str) -> AsyncGenerator[str, None]:
     """
     Generate an AI-powered response to a query using retrieval-augmented generation.
 
-    This function retrieves relevant contexts for the input query,
-    constructs a prompt using the `RAGPrompt` class,
-    and generates a response using a language model.
-    The response is printed in real-time directly to the console.
+    This function retrieves relevant contexts for the input query, constructs a prompt
+    using the `RAGPrompt` class, and generates a response using a language model.
+    The response is streamed in real-time.
 
     Args:
         query (str): The user’s question or input.
 
-    Returns:
-        None
+    Yields:
+        str: Chunks of the generated response.
 
     Dependencies:
-        - LiteLLM:
-            Handles response generation from the language model.
-        - get_contexts:
-            Fetches relevant contexts for the query.
-        - RAGPrompt:
-            Creates a structured prompt with the query and contexts.
+        - LiteLLM: Handles response generation from the language model.
+        - get_contexts: Fetches relevant contexts for the query.
+        - RAGPrompt: Creates a structured prompt with the query and contexts.
     """
 
     context = await get_contexts(query, top_k=config.TOP_K, top_n=config.TOP_N)
     llm = LiteLLM(model_name=config.MODEL_NAME, api_key=config.OPENAI_API_KEY)
+
     stream = llm.generate_streaming(
         prompt=RAGPrompt(QueryWithContext(query=query, context=context)),
     )
 
     async for chunk in stream:
-        print(chunk, end="")
-        sys.stdout.flush()
-    print()
+        yield chunk
 
 
 def parse_query() -> str:
@@ -169,8 +165,8 @@ async def main() -> None:
     """
     Main function that orchestrates the inference process.
 
-    This function validates the configuration, parses the query, and
-    then performs inference asynchronously based on the parsed query.
+    This function parses the query, and then performs inference
+    asynchronously based on the parsed query.
     The result of the inference is printed to the console.
 
     Args:
@@ -180,7 +176,9 @@ async def main() -> None:
         None
     """
     query = parse_query()
-    await inference(query)
+    async for chunk in inference(query):
+        print(chunk, end="", flush=True)
+    print()
 
 
 if __name__ == "__main__":

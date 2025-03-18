@@ -8,7 +8,7 @@ dependencies = [
     "ragbits-core[qdrant]==0.10.0",
     "ragbits-document-search[gcs,azure]==0.10.0",
     "ragbits-cli==0.10.0",
-    "unstructured[md,pdf]>=0.16.14",
     "pre-commit>=4.1.0",
     "pydantic-settings>=2.8.1",
+    "fastapi[standard]>=0.115.11",
 ]

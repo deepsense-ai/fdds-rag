@@ -12,7 +12,7 @@ class Config(BaseSettings):
     # API KEYS
     OPENAI_API_KEY: str
     COHERE_API_KEY: str
-    QDRANT_URL: str = "http://localhost:6333"
+    QDRANT_URL: str = "http://qdrant:6333"
 
     # MODELS
     EMBEDDING_MODEL: str = "text-embedding-3-small"
