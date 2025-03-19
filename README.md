@@ -62,12 +62,21 @@ Before using docker-compose ensure that Docker is running.
 ```
 docker-compose up -d
 ```
-### 6. Load PDF files into Qdrant:
+### 6. Get links of PDF files:
+Run this step only if you don't have a ready list of links to pdf files you want to use
+```bash
+cd scripts/fdds_scrapper
+uv run scrapy crawl get_pdf_links
+```
+Links are saved in `scripts/fdds_scrapper/pdfs.txt`.
+After properly checking the obtained links, place the text file in `data/pdfs`
+
+### 7. Load PDF files into Qdrant:
 Run this step once if there are no changes in the `data/pdfs` directory.
 ```bash
 uv run src/pdf_loader.py
 ```
-### 7. Run a query with the RAG model:
+### 8. Run a query with the RAG model:
 ```bash
 uv run src/inference.py "<Your query here>"
 ```

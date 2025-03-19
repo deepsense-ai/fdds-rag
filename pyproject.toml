@@ -11,4 +11,5 @@ dependencies = [
     "pre-commit>=4.1.0",
     "pydantic-settings>=2.8.1",
     "fastapi[standard]>=0.115.11",
+    "scrapy>=2.12.0",
 ]
