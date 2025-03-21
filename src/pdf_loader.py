@@ -5,7 +5,7 @@ from qdrant_client import AsyncQdrantClient
 from ragbits.core.embeddings.litellm import LiteLLMEmbedder
 from ragbits.core.vector_stores.qdrant import QdrantVectorStore
 from ragbits.document_search import DocumentSearch
-from ragbits.document_search.documents.sources import LocalFileSource
+from ragbits.document_search.documents.sources import WebSource, Source
 from ragbits.document_search.documents.element import IntermediateImageElement
 
 from config import Config
@@ -15,7 +15,7 @@ config = Config()
 
 
 async def ingest_documents(
-    documents: Sequence["LocalFileSource"], document_search: DocumentSearch
+    documents: Sequence["Source"], document_search: DocumentSearch
 ) -> None:
     """
     Ingests a sequence of local file source documents into a document search system.
@@ -71,15 +71,20 @@ async def ingest_pdf_documents() -> None:
         index_name=config.COLLECTION_NAME,
         embedder=embedder,
     )
+
+    with open(config.DOCUMENTS_PATH / "pdfs.txt", "r") as f:
+        urls = f.read().splitlines()
+
     document_search = DocumentSearch(
         vector_store=vector_store,
-        intermediate_element_handlers={
-            IntermediateImageElement: NoImageIntermediateHandler()
-        },
+        enricher_router={IntermediateImageElement: NoImageIntermediateHandler()},
     )
-    documents = LocalFileSource.list_sources(
-        config.DOCUMENTS_PATH, file_pattern="*.pdf"
-    )
+    documents = []
+    for url in urls:
+        documents.extend(await WebSource.list_sources(url))
+    # documents = LocalFileSource.list_sources(
+    #     config.DOCUMENTS_PATH, file_pattern="*.pdf"
+    # )
 
     if len(documents) == 0:
         raise ValueError("No documents found")
