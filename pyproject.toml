@@ -16,4 +16,5 @@ dependencies = [
     "pre-commit>=4.1.0",
     "pydantic-settings>=2.8.1",
     "ragbits[qdrant]>=0.10.1",  # Vector name error (inference)
+    "unstructured[pdf]>=0.17.2"
 ]
