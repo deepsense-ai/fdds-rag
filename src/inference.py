@@ -103,12 +103,12 @@ async def get_contexts(question: str, top_k: int, top_n: int) -> list[str]:
         index_name=config.COLLECTION_NAME,
         embedder=embedder,
     )
-    reranker = LiteLLMReranker(config.RERANKER_MODEL)
-    document_search = DocumentSearch(vector_store=vector_store, reranker=reranker)
+    # reranker = LiteLLMReranker(config.RERANKER_MODEL)
+    document_search = DocumentSearch(vector_store=vector_store) # , reranker=reranker)
     contexts = await document_search.search(
         question,
         SearchConfig(
-            vector_store_kwargs={"k": top_k}, reranker_kwargs={"top_n": top_n}
+            vector_store_kwargs={"k": top_k} # , reranker_kwargs={"top_n": top_n}
         ),
     )
 

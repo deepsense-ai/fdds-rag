@@ -12,9 +12,7 @@ pipeline:
     type: NoopQueryRephraser
 
   reranker:
-    type: ragbits.document_search.retrieval.rerankers.litellm:LiteLLMReranker
-    config:
-      model: cohere/rerank-english-v3.0
+    type: NoopReranker
 
   vector_store:
     type: ragbits.core.vector_stores.qdrant:QdrantVectorStore
