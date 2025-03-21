@@ -1,0 +1,53 @@
+defaults:
+  - data: report_search
+  - pipeline: document_search
+
+pipeline:
+  embedder:
+    type: ragbits.core.embeddings.litellm:LiteLLMEmbeddings
+    config:
+      model: text-embedding-3-small
+
+  rephraser:
+    type: NoopQueryRephraser
+
+  reranker:
+    type: ragbits.document_search.retrieval.rerankers.litellm:LiteLLMReranker
+    config:
+      model: cohere/rerank-english-v3.0
+
+  vector_store:
+    type: ragbits.core.vector_stores.qdrant:QdrantVectorStore
+    config:
+      client:
+        type: AsyncQdrantClient
+        config:
+          url: http://localhost:6333
+
+      embedder:
+        type: ragbits.core.embeddings.litellm:LiteLLMEmbedder
+        config:
+          model: text-embedding-3-small
+
+      index_name: fdds
+  vector_store_kwargs:
+    k: 3
+    image:
+    vector_name: text
+task:
+  name: default
+  type: document-search
+
+metrics:
+  type: ragbits.evaluate.metrics.document_search:DocumentSearchPrecisionRecallF1
+  matching_strategy: RougeChunkMatch
+  options:
+    threshold: 0.5
+#  - type: ragbits.evaluate.metrics.document_search:DocumentSearchRankedRetrievalMetrics
+#    matching_strategy: RougeChunkMatch
+#    options:
+#      threshold: 0.5
+
+neptune:
+  project: deepsense-ai/lachman-consultants-report-creation
+  run: False
