@@ -6,6 +6,7 @@ from ragbits.core.embeddings.litellm import LiteLLMEmbedder
 from ragbits.core.vector_stores.qdrant import QdrantVectorStore
 from ragbits.document_search import DocumentSearch
 from ragbits.document_search.documents.sources import LocalFileSource, WebSource
+from ragbits.document_search.documents.sources import WebSource, Source
 from ragbits.document_search.documents.element import IntermediateImageElement
 
 from config import Config
@@ -15,7 +16,7 @@ config = Config()
 
 
 async def ingest_documents(
-    documents: Sequence["LocalFileSource"], document_search: DocumentSearch
+    documents: Sequence["Source"], document_search: DocumentSearch
 ) -> None:
     """
     Ingests a sequence of local file source documents into a document search system.
@@ -71,14 +72,22 @@ async def ingest_pdf_documents() -> None:
         index_name="fdds-1",
         embedder=embedder,
     )
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6b73b8ae63162339e41e8be455dc2587de684632
     with open(config.DOCUMENTS_PATH / "pdfs.txt", "r") as f:
         urls = f.read().splitlines()
 
     document_search = DocumentSearch(
         vector_store=vector_store,
+<<<<<<< HEAD
         enricher_router={
             IntermediateImageElement: NoImageIntermediateHandler()
         },
+=======
+        enricher_router={IntermediateImageElement: NoImageIntermediateHandler()},
+>>>>>>> 6b73b8ae63162339e41e8be455dc2587de684632
     )
     documents = []
     for url in urls:
@@ -86,6 +95,10 @@ async def ingest_pdf_documents() -> None:
     # documents = LocalFileSource.list_sources(
     #     config.DOCUMENTS_PATH, file_pattern="*.pdf"
     # )
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6b73b8ae63162339e41e8be455dc2587de684632
     if len(documents) == 0:
         raise ValueError("No documents found")
     else:
