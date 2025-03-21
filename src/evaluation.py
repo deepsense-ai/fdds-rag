@@ -17,18 +17,16 @@ async def main(evaluation_config: DictConfig) -> None:
 
     evaluator = Evaluator()
     dataloader = LocalDataLoader(
-        path="data/test_pdf.json", split="train", builder="json"
+        path=str(config.EVAL_DATASET), split="train", builder="json"
     )
     metrics = MetricSet.from_config(evaluation_config.metrics)
-    
+
     results = await evaluator.compute(
-        pipeline=pipeline,
-        dataloader=dataloader,
-        metrics=metrics
+        pipeline=pipeline, dataloader=dataloader, metrics=metrics
     )
     print(results)
 
 
 if __name__ == "__main__":
-    eval_config = OmegaConf.load("evaluation_config/config_ret.yaml")
+    eval_config = OmegaConf.load(config.EVAL_CONFIG)
     asyncio.run(main(eval_config))

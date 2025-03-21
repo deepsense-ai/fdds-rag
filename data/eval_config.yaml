@@ -1,6 +1,3 @@
-defaults:
-  - data: report_search
-  - pipeline: document_search
 
 pipeline:
   embedder:
@@ -13,6 +10,8 @@ pipeline:
 
   reranker:
     type: NoopReranker
+  reranker_kwargs:
+    top_n: 5
 
   vector_store:
     type: ragbits.core.vector_stores.qdrant:QdrantVectorStore
@@ -29,7 +28,7 @@ pipeline:
 
       index_name: fdds
   vector_store_kwargs:
-    k: 3
+    k: 5
     image:
     vector_name: text
 task:
@@ -44,11 +43,7 @@ metrics:
         type: RougeChunkMatch
         config:
           threshold: 0.5
-#  - type: ragbits.evaluate.metrics.document_search:DocumentSearchRankedRetrievalMetrics
-#    matching_strategy: RougeChunkMatch
-#    options:
-#      threshold: 0.5
 
 neptune:
-  project: deepsense-ai/lachman-consultants-report-creation
+  project: deepsense-ai/fdds-rag
   run: False
