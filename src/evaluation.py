@@ -3,6 +3,7 @@ import asyncio
 from ragbits.evaluate.evaluator import Evaluator
 from ragbits.evaluate.dataloaders.local import LocalDataLoader
 from omegaconf import DictConfig, OmegaConf
+from ragbits.evaluate.metrics.base import MetricSet
 
 from evaluation_pipeline import Pipeline
 from config import Config
@@ -18,11 +19,12 @@ async def main(evaluation_config: DictConfig) -> None:
     dataloader = LocalDataLoader(
         path="data/test_pdf.json", split="train", builder="json"
     )
-
+    metrics = MetricSet.from_config(evaluation_config.metrics)
+    
     results = await evaluator.compute(
         pipeline=pipeline,
         dataloader=dataloader,
-        metrics=evaluation_config.metrics,
+        metrics=metrics
     )
     print(results)
 

@@ -37,10 +37,13 @@ task:
   type: document-search
 
 metrics:
-  type: ragbits.evaluate.metrics.document_search:DocumentSearchPrecisionRecallF1
-  matching_strategy: RougeChunkMatch
-  options:
-    threshold: 0.5
+  precision_recall_f1:
+    type: ragbits.evaluate.metrics.document_search:DocumentSearchPrecisionRecallF1
+    config:
+      matching_strategy:
+        type: RougeChunkMatch
+        config:
+          threshold: 0.5
 #  - type: ragbits.evaluate.metrics.document_search:DocumentSearchRankedRetrievalMetrics
 #    matching_strategy: RougeChunkMatch
 #    options:
