@@ -723,8 +723,8 @@ dependencies = [
 requires-dist = [
     { name = "pre-commit", specifier = ">=4.1.0" },
     { name = "pydantic-settings", specifier = ">=2.8.1" },
-    { name = "ragbits", extras = ["qdrant"], specifier = ">=0.10.1" },
-    { name = "ragbits-evaluate", extras = ["relari"], specifier = ">=0.10.1" },
+    { name = "ragbits", extras = ["qdrant"], specifier = ">=0.10.2" },
+    { name = "ragbits-evaluate", extras = ["relari"], specifier = ">=0.10.2" },
     { name = "unstructured", extras = ["pdf"], specifier = ">=0.17.2" },
 ]
 
@@ -3078,7 +3078,7 @@ wheels = [
 
 [[package]]
 name = "ragbits"
-version = "0.10.1"
+version = "0.10.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "ragbits-cli" },
@@ -3088,9 +3088,9 @@ dependencies = [
     { name = "ragbits-evaluate" },
     { name = "ragbits-guardrails" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/76/3a/a6a3dbf2ade5d28c900e94d7130b3a9ee2eb7377cd73de7553d2bde5575b/ragbits-0.10.1.tar.gz", hash = "sha256:d006fd17e197a6a3a5683a8f25737cafc02c134264975c3aedb334d543f1b912", size = 6838 }
+sdist = { url = "https://files.pythonhosted.org/packages/ba/dd/9d570a46b7b3e3d9270c238accfa98e5d8f6200f18a7c42696bb80646a80/ragbits-0.10.2.tar.gz", hash = "sha256:9eb32e7c8737f39de4e3c1cff3c098e64dd82de1959d5b23086dd6065e3e201b", size = 6868 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/94/70/ac63f5ba5e0ce626909be89cbe8a792a35bc7c58fc77630de82bc84619a7/ragbits-0.10.1-py3-none-any.whl", hash = "sha256:120fb888bcbf226f087d7691b154e1cea1550a58b7ffbbbd4532f5ff454d59ec", size = 3940 },
+    { url = "https://files.pythonhosted.org/packages/c7/11/fc6d5a0ecc780f436bff77db895befa3f0655fa938a95183f09ebf45f1eb/ragbits-0.10.2-py3-none-any.whl", hash = "sha256:7d386d2dddba0be83f1992f23a577e57bcb11a6392712610101f2d6939417b47", size = 3947 },
 ]
 
 [package.optional-dependencies]
@@ -3100,32 +3100,32 @@ qdrant = [
 
 [[package]]
 name = "ragbits-cli"
-version = "0.10.1"
+version = "0.10.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "ragbits-core" },
     { name = "typer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b9/48/cf143d4ac83399faf529cc1c27bf39e5cb88761155b4efb2f77b8a03400c/ragbits_cli-0.10.1.tar.gz", hash = "sha256:f29ec472b278b017f9001945f42914adf094a45046bb3f34ab97f6a12a9e5e9d", size = 7589 }
+sdist = { url = "https://files.pythonhosted.org/packages/52/41/f8ffeea1377220ac3a12b18f34005cabf18741c89bd6de6e37ae3004ffab/ragbits_cli-0.10.2.tar.gz", hash = "sha256:bc6034ac465f0f371c5ebe094db633d43b004935e502da5f9b041becc19d31af", size = 7601 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c7/c4/c2a3b0c128a735f049a90b6d10d3e8845a59d16240e921ba79be3c286ae0/ragbits_cli-0.10.1-py3-none-any.whl", hash = "sha256:75cfe389f7d782fb30121b85ccd8033d65158bb3370c09df61021eea79868cf2", size = 7054 },
+    { url = "https://files.pythonhosted.org/packages/87/a0/23566261512bf0209c6c836d3e89949506e19a8999a46800d53751cf55b5/ragbits_cli-0.10.2-py3-none-any.whl", hash = "sha256:256ffdd6bf2ab98eefdf6e133b6fe66578438475b0294295cc832529d828bd83", size = 7055 },
 ]
 
 [[package]]
 name = "ragbits-conversations"
-version = "0.10.1"
+version = "0.10.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "ragbits-core" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c3/08/0ac20ccc7eae61fc0198df7b906968110ac8aa5b0c0245954682d7dac03b/ragbits_conversations-0.10.1.tar.gz", hash = "sha256:bc59c8d0ec817a79900b0aa6aa8ceee5eb2366baf7b26acb15ddfab6b6b9db6d", size = 6629 }
+sdist = { url = "https://files.pythonhosted.org/packages/07/cb/d4fcba89ddfef68feff3ee71ff04fdef9869084fd03f6fd94edec6aa39d1/ragbits_conversations-0.10.2.tar.gz", hash = "sha256:5606800c160dcf4d6a25ff22c451b08dd0851b5827340b83bb3f84a24046241f", size = 6639 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/3d/de/b132f68b4152f922101df17587214c26024441ea52d1581c73486a7cbc2a/ragbits_conversations-0.10.1-py3-none-any.whl", hash = "sha256:980287eef8bd6f6693954ad6fe51ff9868abad63d0f28edeea89b649880d8526", size = 7455 },
+    { url = "https://files.pythonhosted.org/packages/f4/36/1c7949f9a38c436cb16b405135a3ade29ea35f2d194b4907f4122a1e3800/ragbits_conversations-0.10.2-py3-none-any.whl", hash = "sha256:5133c63846223f982fe61957ffa07a5123e31e771f8d8d9a4eed70fdd00b7018", size = 7454 },
 ]
 
 [[package]]
 name = "ragbits-core"
-version = "0.10.1"
+version = "0.10.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jinja2" },
@@ -3134,14 +3134,14 @@ dependencies = [
     { name = "tomli" },
     { name = "typer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/5f/6d/f3588b66cbda7004c07029858bd8f05eb4f74f56b9d439023c09bf1133e6/ragbits_core-0.10.1.tar.gz", hash = "sha256:2dc645a695dfe22a6a3419170c17c6a290da800246814c2e5ba7d0e50742ff1f", size = 117799 }
+sdist = { url = "https://files.pythonhosted.org/packages/f1/49/46fee8260679f117ce3372ddf6d1c06ef48d60ec848d8252a9b57a2b78b1/ragbits_core-0.10.2.tar.gz", hash = "sha256:1e93e4119d7acdc01a901eaad71bc2dc1a0d31a697c55202d57fbff8626d42d1", size = 117805 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/68/7f/b76689eb7bf0bec049aa54eeb34e7ded38615db2366891054409ebd775fa/ragbits_core-0.10.1-py3-none-any.whl", hash = "sha256:b59df08f3c25f7da638219b2b82cd00a47de348ac8cd48ee62e9d447dded3733", size = 69327 },
+    { url = "https://files.pythonhosted.org/packages/26/14/da3343afb8c37ab70767fc2fadb37a2db8daf9cdad6dfcc2c7af64f6c146/ragbits_core-0.10.2-py3-none-any.whl", hash = "sha256:330b1bad488338b2def6d4a43f9a188a08914e9f2380013160dc557639050c7c", size = 69326 },
 ]
 
 [[package]]
 name = "ragbits-document-search"
-version = "0.10.1"
+version = "0.10.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiohttp" },
@@ -3151,14 +3151,14 @@ dependencies = [
     { name = "unstructured" },
     { name = "unstructured-client" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b5/ba/97db93caccabf13201e736c5ad54ade7a5dadb6502f8c35f62a9ca409653/ragbits_document_search-0.10.1.tar.gz", hash = "sha256:4328d8b74759b3fe0ffcd9737df20b237ebc2b2daa04e75babf49fe278cd7f30", size = 485361 }
+sdist = { url = "https://files.pythonhosted.org/packages/5f/34/f9426e4860b24a61786a865d2e715d709dab10c6f373deef13171b602203/ragbits_document_search-0.10.2.tar.gz", hash = "sha256:b7d74d689461a74ac23cd011fa710956870e87a2236d5b101a139215de4aa867", size = 486306 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/fb/93/1724936ed880162cd0cfdbf2be040f0519c2975288d59972192cfba6d7fa/ragbits_document_search-0.10.1-py3-none-any.whl", hash = "sha256:518b65b2952b09eb2092974300fa56cced910fb7fdfdc47d6ea4bcd8efc69a2a", size = 54482 },
+    { url = "https://files.pythonhosted.org/packages/9f/ec/7de4b9480c0c0da77b934708d9300442c24d3955ec1d2ef3157f83f59acb/ragbits_document_search-0.10.2-py3-none-any.whl", hash = "sha256:ad7ca975764a86963aef7de6825ff8ca178b18c9477712232e8385e45b7f71cb", size = 54511 },
 ]
 
 [[package]]
 name = "ragbits-evaluate"
-version = "0.10.1"
+version = "0.10.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "distilabel" },
@@ -3167,9 +3167,9 @@ dependencies = [
     { name = "optuna" },
     { name = "ragbits-core" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/44/28/2572ee1068b12f6908b08e335d2ad97178bcee93eccfe8de846a8f724d4f/ragbits_evaluate-0.10.1.tar.gz", hash = "sha256:53a416cfab7529dd9e12e8d4eb2979c5a83a03937269f4a0a4537788d9e744ec", size = 16684 }
+sdist = { url = "https://files.pythonhosted.org/packages/35/1b/6e26dd4f9f6ae8e7fd18e378f786a21a3351cac107cd9af03237f267fe9f/ragbits_evaluate-0.10.2.tar.gz", hash = "sha256:00951ee6064edd5d802a6281ae5d741dca7acadb2c76483c5b46fedbda995b42", size = 16693 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/45/62/8195660e0928aa1bb0b63019e149268b104fc470d8583138791c59cb7cbe/ragbits_evaluate-0.10.1-py3-none-any.whl", hash = "sha256:68aec5c3a774380c932251f223c2d4a3fc601e8f9e36f34e21a9f81395665155", size = 26754 },
+    { url = "https://files.pythonhosted.org/packages/01/69/85565f4c9ec6fee367fbdb5671f602f064c7f0600488c4ecd4169a8d718a/ragbits_evaluate-0.10.2-py3-none-any.whl", hash = "sha256:45dda379cf53527964f7b8abf8425c09d996ae7c519c459fedb7442aafd9e9b8", size = 26754 },
 ]
 
 [package.optional-dependencies]
@@ -3179,14 +3179,14 @@ relari = [
 
 [[package]]
 name = "ragbits-guardrails"
-version = "0.10.1"
+version = "0.10.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "ragbits-core" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a5/1c/374c1a95509a4b2ea1510e1cdeca71234a7acded793dc4fc44ab102c8573/ragbits_guardrails-0.10.1.tar.gz", hash = "sha256:5e61906ecc692ffa788ae15b4d1d3fb77bc035e556717d84bf003168d5b20516", size = 3755 }
+sdist = { url = "https://files.pythonhosted.org/packages/8d/4c/e88046549a8c4346aa84813af331f4539bf15a242dd3c97fc908f0545669/ragbits_guardrails-0.10.2.tar.gz", hash = "sha256:4c55b1f654d06029213ee60fcae255d12e67a5802436acea9a68b225c199267f", size = 3758 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/91/ce/8969144fc90e4d9bc75f3596e1408ad567bbad0c34638cd23e4c5fa0c9fd/ragbits_guardrails-0.10.1-py3-none-any.whl", hash = "sha256:b33d349521072ef8a08d26eb83c0eb4f9b37d8f170ab7a704973b8884c2127c0", size = 3647 },
+    { url = "https://files.pythonhosted.org/packages/59/93/760cd45eb90166c094087cb2b89f3731a273ccaf8e37a3381d3367c1dbed/ragbits_guardrails-0.10.2-py3-none-any.whl", hash = "sha256:1d48ef8bf983846a3fa21463583f40f934709cb384400bf95b544fb23b575208", size = 3649 },
 ]
 
 [[package]]

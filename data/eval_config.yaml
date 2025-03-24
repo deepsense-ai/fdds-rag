@@ -1,13 +1,5 @@
 
 pipeline:
-  embedder:
-    type: ragbits.core.embeddings.litellm:LiteLLMEmbeddings
-    config:
-      model: text-embedding-3-small
-
-  rephraser:
-    type: NoopQueryRephraser
-
   reranker:
     type: NoopReranker
   reranker_kwargs:
@@ -31,9 +23,6 @@ pipeline:
     k: 5
     image:
     vector_name: text
-task:
-  name: default
-  type: document-search
 
 metrics:
   precision_recall_f1:

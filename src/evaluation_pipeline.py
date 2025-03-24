@@ -36,7 +36,9 @@ class Pipeline(EvaluationPipeline):
         """
         print(data)
         query = data["question"]
-        elements = await self.document_search.search(query, self.config)
+        elements = await self.document_search.search(
+            query, self.config  # type: ignore[arg-type]
+        )
         predicted_passages = [element.text_representation or "" for element in elements]
 
         return SearchResult(
