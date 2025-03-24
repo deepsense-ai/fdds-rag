@@ -8,10 +8,9 @@ from ragbits.core.llms.litellm import LiteLLM
 from ragbits.core.prompt import Prompt
 from ragbits.core.vector_stores.qdrant import QdrantVectorStore
 from ragbits.document_search import DocumentSearch, SearchConfig
-from ragbits.document_search.retrieval.rerankers.litellm import LiteLLMReranker
 from typing import AsyncGenerator
 
-from src.config import Config
+from config import Config
 
 config = Config()
 
@@ -104,13 +103,10 @@ async def get_contexts(question: str, top_k: int, top_n: int) -> list[str]:
         index_name=config.COLLECTION_NAME,
         embedder=embedder,
     )
-    reranker = LiteLLMReranker(config.RERANKER_MODEL)
-    document_search = DocumentSearch(vector_store=vector_store, reranker=reranker)
+    document_search = DocumentSearch(vector_store=vector_store)
     contexts = await document_search.search(
         question,
-        SearchConfig(
-            vector_store_kwargs={"k": top_k}, reranker_kwargs={"top_n": top_n}
-        ),
+        SearchConfig(vector_store_kwargs={"k": top_k}),
     )
 
     texts = [context.text_representation for context in contexts]
@@ -139,7 +135,6 @@ async def inference(query: str) -> AsyncGenerator[str, None]:
 
     context = await get_contexts(query, top_k=config.TOP_K, top_n=config.TOP_N)
     llm = LiteLLM(model_name=config.MODEL_NAME, api_key=config.OPENAI_API_KEY)
-
     stream = llm.generate_streaming(
         prompt=RAGPrompt(QueryWithContext(query=query, context=context)),
     )
@@ -168,9 +163,6 @@ async def main() -> None:
     This function parses the query, and then performs inference
     asynchronously based on the parsed query.
     The result of the inference is printed to the console.
-
-    Args:
-        None
 
     Returns:
         None

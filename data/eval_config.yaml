@@ -1,0 +1,37 @@
+
+pipeline:
+  reranker:
+    type: NoopReranker
+  reranker_kwargs:
+    top_n: 5
+
+  vector_store:
+    type: ragbits.core.vector_stores.qdrant:QdrantVectorStore
+    config:
+      client:
+        type: AsyncQdrantClient
+        config:
+          url: http://localhost:6333
+
+      embedder:
+        type: ragbits.core.embeddings.litellm:LiteLLMEmbedder
+        config:
+          model: text-embedding-3-small
+
+      index_name: fdds
+  vector_store_kwargs:
+    k: 5
+    image:
+    vector_name: text
+
+metrics:
+  precision_recall_f1:
+    type: ragbits.evaluate.metrics.document_search:DocumentSearchPrecisionRecallF1
+    config:
+      matching_strategy:
+        type: RougeChunkMatch
+        config:
+          threshold: 0.5
+
+neptune:
+  project: deepsense-ai/fdds-rag
