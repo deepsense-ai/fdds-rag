@@ -34,7 +34,6 @@ class Pipeline(EvaluationPipeline):
         Returns:
             The evaluation result.
         """
-        print(data)
         query = data["question"]
         elements = await self.document_search.search(
             query, self.config  # type: ignore[arg-type]

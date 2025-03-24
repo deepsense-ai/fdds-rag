@@ -35,4 +35,3 @@ metrics:
 
 neptune:
   project: deepsense-ai/fdds-rag
-  run: False

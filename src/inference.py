@@ -102,7 +102,7 @@ async def get_contexts(question: str, top_k: int, top_n: int) -> list[str]:
         index_name=config.COLLECTION_NAME,
         embedder=embedder,
     )
-    document_search = DocumentSearch(vector_store=vector_store)  # , reranker=reranker)
+    document_search = DocumentSearch(vector_store=vector_store)
     contexts = await document_search.search(
         question,
         SearchConfig(vector_store_kwargs={"k": top_k}),
@@ -168,9 +168,6 @@ async def main() -> None:
     This function validates the configuration, parses the query, and
     then performs inference asynchronously based on the parsed query.
     The result of the inference is printed to the console.
-
-    Args:
-        None
 
     Returns:
         None
