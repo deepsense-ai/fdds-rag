@@ -1,0 +1,122 @@
+[
+        {
+            "question": "Wymień trzy grupy czynników ryzyka krzywdzenia dziecka",
+            "gt_passages": "1. CZYNNIKI ZWIĄZANE Z DZIECKIEM\n2. CZYNNIKI RODZINNE, CZYLI CECHY CHARAKTERYZUJĄCE\nFUNKCJONOWANIE RODZINY ORAZ CECHY POSZCZEGÓLNYCH\nJEJ CZŁONKÓW\n3. CZYNNIKI RYZYKA KRZYWDZENIA DZIECKA\nZWIĄZANE ZE ŚRODOWISKIEM SPOŁECZNYM"
+        },
+        {
+            "question": "Jakie są CZYNNIKI RYZYKA KRZYWDZENIA DZIECKA\nZWIĄZANE ZE ŚRODOWISKIEM SPOŁECZNYM",
+            "gt_passages": "zolacja społeczna\nubóstwo\nprzemoc i patologia\nw najbliższym otoczeniu\nrodziny "
+        },
+        {
+            "question": "Podaj mi numer telefonu zaufania dla Dzieci i Młodzierzy",
+            "gt_passages": "116 111"
+        },
+        {
+            "question": "Ile wynosi czas trwania spotkania \"Słowa rania, czyli jak unikać krzyku i kpin i obrażania dziecka\"",
+            "gt_passages": "2 godziny"
+        },
+        {
+            "question": "Podaj mi zabawy dladzieci w wieku 1-2 lata",
+            "gt_passages": "1. Masa solna,\n2. Gimnastyka na wesoło,\n3. Pchli targ,\n4. Kręgle,\n5. Mały muzykant"
+        },
+        {
+            "question": "Co jest potrzebne do gry \"Co jest na łące?\"",
+            "gt_passages": "zielony i biały papier, różnokolorowa włóczka lub nitka,\nwata, nożyczki, klej biurowy; gałązki, liście, kwiaty zebrane na spacerze, obrazki\nlub zdjęcia owadów, kwiatów, zwierząt, które można spotkać na łące (można je\npowycinać ze starych czasopism, zdjęć, gazet)."
+        },
+        {
+            "question": "Opisz mi charakterystykę warsztatów \"Współpraca między służbami w\nramach Zespołów Interdyscyplinarnych\"",
+            "gt_passages": "2. Charakterystyka warsztatów\nCel zajęć\nZałożeniem warsztatu jest, by po jego zakończeniu uczestnicy:\nlepiej rozumieli cel grup roboczych;\nlepiej rozumieli kompetencje poszczególnych służb i lepiej potrafili dzielić się zadaniami;\nznali elementy, jakie powinien zawierać plan pomocy rodzinie;\npotrafili zidentyfikować stereotypy utrudniające pracę w grupach roboczych i aktywnie im przeciwdziałać.\n Czas trwania: warsztat przewidziano na 8 godzin dydaktycznych, podzielonych na półtoragodzinne bloki. Między\nblokami warto uwzględnić krótkie przerwy (10-15 min. oraz jedną dłuższą przerwę na lunch).\n Liczebność grupy: zależna od możliwości lokalowych. Zaleca się jednak, aby grupa liczyła nie mniej niż 8 osób\ni nie więcej niż 20. Umożliwi to każdemu uczestnikowi efektywną pracę. Ćwiczenia w scenariuszu zaplanowane są na\ncztery podgrupy.\n Grupa odbiorcza: profesjonaliści zaangażowani w prace Zespołów Interdyscyplinarnych ds. przeciwdziałania przemocy w rodzinie oraz powoływanych przez zespoły grup roboczych. Zaleca się, by skład grupy był mieszany, uwzględniający przedstawicieli różnych służb (pomocy społecznej, służby zdrowia, edukacji, służby kuratorskiej, policji, organizacji pozarządowych, gminnych komisji rozwiązywania problemów alkoholowych).\n Miejsce: powinno zapewniać uczestnikom komfort fizyczny. Wygodne krzesła, przestrzeń do swobodnego poruszania się podczas przerwy, dostępność napojów – kawa, herbata, ciastka stworzą miłą atmosferę nieformalnego\nspotkania, pozwolą poczuć się uczestnikom swobodnie.\n Materiały\nDo prowadzenia zajęć potrzebne będą:\nflipchart,\npisaki,\nlaptop,\nrzutnik,\nplastelina do przyklejania,\ndługopisy,\nkartki do notatek,\n4 surowe jajka,\n4 rolki taśmy klejącej,\n3 opakowania słomek do napojów,\n4 pary nożyczek,\nbroszura „Uwaga, dziecko! Realizacja procedury Niebieskie\nKarty w sytuacji przemocy w rodzinie wobec dziecka”,\nktórą można pobrać ze strony www.edukacja.fdds.pl,\nRozporządzenie Rady Ministrów z dnia z dnia 13 września\n2011 r. w sprawie procedury „Niebieskie Karty” oraz\nwzorów formularzy „Niebieska Karta”,\nartykuł Stowarzyszenia Niebieska Linia „Mity, stereotypy\ni przekonania” (http://www.niebieskalinia.info/index.php/\nprzemoc-w-rodzinie/9-mity-stereotypy-i-przekonania),\nschemat rozmowy wspierającej.\n Prowadzący: najlepszą osobą do prowadzenia zajęć jest prawnik, znający dobrze problematykę przeciwdziałania\nprzemocy w rodzinie lub inny profesjonalista z dużym doświadczeniem w podejmowaniu interwencji. Warsztaty prowadzić\nmożna jednoosobowo, choć jeśli są takie możliwości warto zaangażować dwóch trenerów, np. prawnika i psychologa pracującego w Zespole Interdyscyplinarnym.\n Metody pracy: miniwykład, dyskusja, praca w grupach, praca na przypadkach, burza mózgów"
+        },
+        {
+            "question": "Czy  WYSŁUCHANIE DZIECKA W TRYBIE ART. 216 I 576§2 KPC powinno odbywać się na sali rozpraw sądu?? ",
+            "gt_passages": "Wysłuchanie powinno odbywać się poza salą\nrozpraw sądu."
+        },
+        {
+            "question": "Czy dzieci będące wykorzystywane seksualnie posiadają wiedzę o fizyczności i seksie?",
+            "gt_passages": "Bardzo często dzieci, które były wykorzystywane seksualnie albo same\nbyły sprawcami wykorzystywania, o fi zyczności i seksie wiedzą znacznie mniej\nniż nam się wydaje. Dla wielu z nich, problemem jest stosunek do własnego\nciała; zaburzenia seksualne, nieumiejętność tolerowania dotyku i inne podobne nieprawidłowości, które uzasadniają podjęcie kompleksowej interwencji\nterapeutycznej. "
+        },
+        {
+            "question": "Jakie są długofalowe skutki krzywdzenia małych dzieci?",
+            "gt_passages": "Jednym z odległych skutków krzywdzenia w dzieciństwie są zaburzenia osobowości, prowadzące do podejmowania zachowań ryzykownych. Wyniki badań pokazują, że ci, którzy doświadczyli jako dzieci przemocy lub zaniedbania, częściej niż ich rówieśnicy podejmują zachowania ryzykowne dla zdrowia\ni życia."
+        },
+        {
+            "question": "Czy Matka lub ojciec poniżej 18. roku życia są czynnikiem ryzyka krzywdzenia małych dzieci?",
+            "gt_passages": "Tak"
+        },
+        {
+            "question": "Co każdy rodzic powinien usłyszeć w kwestii dzieci?",
+            "gt_passages": " Nigdy nie wolno potrząsać dzieckiem, ani go uderzyć.\n Większość rodziców przeżywa stres związany z opieką i wychowaniem\ndziecka.\n Rodzice powinni starać się zrozumieć jakie potrzeby ma ich małe dziecko\ni jak się rozwija. To pomoże im zrozumieć i radzić sobie z trudnościami,\njakie napotkają w czasie opieki nad dzieckiem.\n Jeśli rodzic czuje, że nie może sobie poradzić, że sytuacja wymyka mu się\nz rąk, powinien jak najszybciej poszukać wsparcia – niech poprosi kogoś\nz rodziny, przyjaciół o pomoc w opiece nad dzieckiem.\n Aby móc dobrze opiekować się dzieckiem, rodzic musi dbać o siebie. Nieszczęśliwy rodzic to także nieszczęśliwe dziecko!\n Warto szukać pomocy i wsparcia! Wiedza specjalisty czy innych rodziców\nułatwi opiekę i wychowanie dziecka, pozwoli także rodzicowi zobaczyć,\nże nie jest osamotniony. "
+        },
+        {
+            "question": "Podaj definicję wykorzystywania seksualnego dziecka wg WHO",
+            "gt_passages": "Wykorzystanie seksualne dziecka to włączanie dziecka w aktywność seksualną, której nie potrafi ono w pełni zrozumieć i udzielić na nią świadomej zgody i/lub na którą nie jest dojrzałe rozwojowo i nie może zgodzić się\nw ważny prawnie sposób i/lub która jest niezgodna z normami prawnymi lub obyczajowymi danego społeczeństwa. Z wykorzystaniem seksualnym mamy do czynienia, gdy taka aktywność wystąpi między dzieckiem\na dorosłym lub dzieckiem a innym dzieckiem, jeśli te osoby ze względu na\nwiek bądź stopień rozwoju pozostają w relacji opieki, zależności, władzy.\nCelem takiej aktywności jest zaspokojenie potrzeb innej osoby. "
+        },
+        {
+            "question": "Który artykuł w kodeksie karnym odnosi się do kontaktu płciowego z osobą poniżej 15 roku życia?",
+            "gt_passages": "art. 200 § 1 kk"
+        },
+        {
+            "question": "Jakie są możliwe konsekwencje przemocy seksualnej u dziecki szkolnych?",
+            "gt_passages": "lęk, nerwica, agresja, koszmary, problemy szkolne, hiperaktywność i zachowanie regresywne"
+        },
+        {
+            "question": "Jakie są możliwe konsekwencje przemocy seksualnej u nastolatków?",
+            "gt_passages": "depresja, wycofanie, tendencje samobójcze, samouszkodzenia, skargi somatyczne, akty przestępcze, ucieczki z domu i nadużywanie substancji."
+        },
+        {
+            "question": "Podaj etapy diagnozy krzywdzonego dziecka  ",
+            "gt_passages": "wywiad z rodzicem/rodzicami lub opiekunem/opiekunami dziecka,\n• analiza dostępnej dokumentacji dotyczącej dziecka (np. medycznej,\nszkolnej, pedagogicznej, psychologicznej),\n• określenie kwestii wymagających weryfi kacji, postawienie hipotez badawczych,\n• opracowanie planu diagnozy dziecka,\n• nawiązanie kontaktu z dzieckiem,\n• badanie dziecka (obserwacja, rozmowa, zabawa kierowana, techniki\nstandardowe i niestandardowe, wytwory plastyczne),\nanaliza dostępnego materiału,\n• zabezpieczenie materiału badawczego,\n• rozmowa z rodzicem/opiekunem uzupełniająca wiedzę o dziecku, informująca o wyniku diagnozy,\n• sformułowanie pisemnej diagnozy. "
+        },
+        {
+            "question": "Co powinien zrobić lekarz w przypadku osoby małoletniej podejrzanej o bycie wykorzystaną seksualnie?",
+            "gt_passages": "Lekarz jest zobowiązany do powiadomienia odpowiednich władz — prokuratury, policji (zgodnie z § 2 art. 304 kpk) oraz dodatkowo rodziców lub opiekunów prawnych osoby małoletniej w przypadku, gdy osoba ta zgłasza się do\nszpitala sama lub w towarzystwie osób trzecich."
+        },
+        {
+            "question": "Czy u zgwałconych dziewcząt zawsze wykrywa się ślady udzkodzeń miejsca imtymnego?",
+            "gt_passages": "Nie, u około 60% zgwałconych dziewcząt nie wykrywa się śladów uszkodzeń\nukładu moczowo–płciowego w badaniu ginekologicznym"
+        },
+        {
+            "question": "Do kiedy powinno się zrobić badania dziecka wykorzystanego seksualnie?",
+            "gt_passages": "Analizę medyczno–sądową należy przeprowadzić do 72 godzin od aktu\nseksualnego; im wcześniej nastąpi badanie i pobranie próbek, tym większe\nprawdopodobieństwo dokumentacji dowodów."
+        },
+        {
+            "question": "Jaki jest cel terapii dziecka wykorzystywanego sekualnie?",
+            "gt_passages": "Celem terapii dziecka wykorzystywanego seksualnie jest przywrócenie mu\nrównowagi psychicznej."
+        },
+        {
+            "question": "Czy mogę stosować kary cielesne?",
+            "gt_passages": "W 2010 r. ustawodawca wprowadził do Kodeksu rodzinnego i opiekuńczego\nart. 961 (Kodeks rodzinny i opiekuńczy, Dz.U.2019.2086). Przepis ten zakazuje\nosobom wykonującym władzę rodzicielską oraz sprawującym opiekę lub pieczę\nnad małoletnim stosowania kar cielesnych. Stosowanie przez rodziców kar cielesnych może prowadzić do wypełnienia znamion niektórych przestępstw przeciwko życiu i zdrowiu z Kodeksu karnego (patrz punkt 4.2.4). Sankcją może być ograniczenie rodzicom władzy rodzicielskiej przez sąd opiekuńczy. Stosowanie\nkar cielesnych może prowadzić do wszczęcia procedury przeciwdziałania przemocy „Niebieskie Karty”"
+        },
+        {
+            "question": "ile dzieci doświadczyło wykorzystywania seksualnego bez kontaktu fizycznego?",
+            "gt_passages": "20% dzieci doświadczyło wykorzystywania seksualnego bez kontaktu fizycznego."
+        },
+        {
+            "question": "Czy sprawcy wykorzystania seksualnego to zazwyczaj obe osoby?",
+            "gt_passages": "Nie, 80% sprawców wykorzystania seksualnego pochodzi ze środowiska\ndobrze znanego dziecku."
+        },
+        {
+            "question": "Jakie są krzywdzące zachowania seksualne wobec dzieci bez podjęcia kontaktu fizycznego?",
+            "gt_passages": "pokazywanie dziecku materiałów pornograficznych;\npokazywanie dziecku genitaliów swoich lub innej osoby w celu jego\nerotyzacji;\nobnażanie dziecka niezwiązane ze sprawowaniem nad nim opieki\nlub jego leczenia;\nfotografowanie dziecka w celu tworzenia obrazów o charakterze\npornograficznym i erotycznym;\nzachęcanie dziecka do obserwowania lub słuchania aktów seksualnych – rzeczywistych bądź odtwarzanych (np. z internetu albo z innych nośników elektronicznych);\nprowadzenie z dzieckiem rozmów o treści erotycznej wykraczającej\npoza edukację seksualną."
+        },
+        {
+            "question": "Czy pokazywanie dziecku materiałów pornograficznych jest krzywdzącym zachowaniem?",
+            "gt_passages": "Tak, jest krzywdzącym zachowaniem seksualnym wobec dzieci bez podjęcia kontaktu fizycznego."
+        },
+        {
+            "question": "Czy pornografia jest obecna wśród dzieci?",
+            "gt_passages": "Tak, 43% dzieci i nastolatków w Polsce miało kontakt z pornografią\nw internecie"
+        },
+        {
+            "question": "Moje dziecko ma 15 lat i nie jest wstanie utrzymać związku dłużej niż pół roku, czy to źle?",
+            "gt_passages": "Nie, Częste i nietrwałe zakochania oraz tworzenie par to powrzechne przejawy seksualne w okresie od 12 do 16 r.ż."
+        },
+        {
+            "question": "Czy mogę rozmawiać z moim dzieckiem o wykorzystaniu?",
+            "gt_passages": "Zrób, co możesz, by pomóc dziecku mówić o tym, co je spotkało. Skup\nna nim całą swoją uwagę, odłóż komórkę, oderwij się od innych zajęć.\nUsiądź blisko dziecka, ale w takiej odległości, aby nie czuło się ono przytłoczone twoja osobą. Okaż cierpliwość, nie popędzaj dziecka, nie zarzucaj pytaniami i swoimi wątpliwościami. Panuj nad emocjami. Teraz\nnajważniejszy jest komfort dziecka, a nie twoje przerażenie, wściekłość\nczy rozpacz. Daj mu bliskość, ale nie zmuszaj do kontaktu fizycznego.\nZadając dziecku pytania, uważaj na to, aby nie były one sugerujące,\nobwiniające je, czy podważające jego wiarygodność."
+        },
+        {
+            "question": "Jestem z Głogowa, gdzie mogę s=uzyskać pomoc w sprawie wykorzystywania seksualnego mojego dziecka?",
+            "gt_passages": "Centrum Pomocy Dzieciom, Głogów\nStowarzyszenie dla Dzieci i Młodzieży SZANSA w Głogowie\nul. Perseusza 13, 67-200 Głogów\ntel.: 76 727 60 70, e-mail: biuro@szansa.glogow.pl"
+        }
+    ]
