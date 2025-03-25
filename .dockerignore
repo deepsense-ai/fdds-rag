@@ -1,5 +1,8 @@
-# Ignore the data folder
+# Ignore irrelevant files
 data/
+scripts/
+.neptune
+README.md
 
 # Ignore Python bytecode files
 *.pyc

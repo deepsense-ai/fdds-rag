@@ -9,8 +9,8 @@ from ragbits.document_search import DocumentSearch
 from ragbits.document_search.documents.sources import LocalFileSource, WebSource, Source
 from ragbits.document_search.documents.element import IntermediateImageElement
 
-from config import Config
-from handlers import NoImageIntermediateHandler
+from src.config import Config
+from src.handlers import NoImageIntermediateHandler
 
 config = Config()
 
@@ -71,7 +71,7 @@ async def ingest_pdf_documents(source_type: str) -> None:
     embedder = LiteLLMEmbedder(
         model=config.EMBEDDING_MODEL,
     )
-    qdrant_client = AsyncQdrantClient(url=config.QDRANT_URL)
+    qdrant_client = AsyncQdrantClient(url=config.QDRANT_INGEST_URL)
     vector_store = QdrantVectorStore(
         client=qdrant_client,
         index_name=config.COLLECTION_NAME,

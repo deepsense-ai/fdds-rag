@@ -8,7 +8,7 @@ from ragbits.evaluate.metrics.base import MetricSet
 from ragbits.evaluate.utils import log_evaluation_to_neptune
 
 from evaluation_pipeline import Pipeline
-from config import Config
+from src.config import Config
 
 config = Config()
 

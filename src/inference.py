@@ -2,15 +2,16 @@ import asyncio
 import sys
 
 from pydantic import BaseModel
-from qdrant_client import AsyncQdrantClient
 from ragbits.core.embeddings.litellm import LiteLLMEmbedder
 from ragbits.core.llms.litellm import LiteLLM
-from ragbits.core.prompt import Prompt
+from ragbits.core.prompt import ChatFormat, Prompt
 from ragbits.core.vector_stores.qdrant import QdrantVectorStore
 from ragbits.document_search import DocumentSearch, SearchConfig
+from ragbits.conversations.history.compressors.llm import StandaloneMessageCompressor
 from typing import AsyncGenerator
+from qdrant_client import AsyncQdrantClient
 
-from config import Config
+from src.config import Config
 
 config = Config()
 
@@ -53,6 +54,7 @@ class RAGPrompt(Prompt[QueryWithContext]):
     system_prompt = """
     You are a helpful assistant.
     Answer the QUESTION that will be provided using CONTEXT.
+    DO NOT INFORM THAT INFORMATION IS PROVIDED IN CONTEXT!
     If in the given CONTEXT there is not enough information refuse to answer.
     """
 
@@ -113,16 +115,19 @@ async def get_contexts(question: str, top_k: int, top_n: int) -> list[str]:
     return texts
 
 
-async def inference(query: str) -> AsyncGenerator[str, None]:
+async def inference(query_with_history: ChatFormat) -> AsyncGenerator[str, None]:
     """
     Generate an AI-powered response to a query using retrieval-augmented generation.
 
-    This function retrieves relevant contexts for the input query, constructs a prompt
-    using the `RAGPrompt` class, and generates a response using a language model.
-    The response is streamed in real-time.
+    This function retrieves relevant contexts for the input query, optionally compresses
+    and includes the conversation history, constructs a prompt using the `RAGPrompt`
+    class, and generates a response using a language model. The response is streamed in
+    real-time in chunks.
 
     Args:
-        query (str): The user’s question or input.
+        query_with_history (ChatFormat):
+            The combined conversation history and current query
+            to be included in the response generation.
 
     Yields:
         str: Chunks of the generated response.
@@ -131,19 +136,24 @@ async def inference(query: str) -> AsyncGenerator[str, None]:
         - LiteLLM: Handles response generation from the language model.
         - get_contexts: Fetches relevant contexts for the query.
         - RAGPrompt: Creates a structured prompt with the query and contexts.
+        - StandaloneMessageCompressor:
+            Compresses the conversation input (history + query)
+            before appending it to the context.
     """
+    llm = LiteLLM(model_name=config.MODEL_NAME, api_key=config.OPENAI_API_KEY)
+
+    compressor = StandaloneMessageCompressor(llm=llm)
+    query = await compressor.compress(query_with_history)
 
     context = await get_contexts(query, top_k=config.TOP_K, top_n=config.TOP_N)
-    llm = LiteLLM(model_name=config.MODEL_NAME, api_key=config.OPENAI_API_KEY)
     stream = llm.generate_streaming(
         prompt=RAGPrompt(QueryWithContext(query=query, context=context)),
     )
-
     async for chunk in stream:
         yield chunk
 
 
-def parse_query() -> str:
+def parse_query() -> ChatFormat:
     """Parses the query from command line arguments.
 
     Returns:
@@ -153,7 +163,13 @@ def parse_query() -> str:
         print('Usage: uv run inference.py "<Your query here>"')
         sys.exit(1)
 
-    return sys.argv[1]
+    conversation = [
+        {
+            "role": "user",
+            "content": sys.argv[1],
+        }
+    ]
+    return conversation
 
 
 async def main() -> None:
@@ -167,8 +183,8 @@ async def main() -> None:
     Returns:
         None
     """
-    query = parse_query()
-    async for chunk in inference(query):
+    conversation = parse_query()
+    async for chunk in inference(conversation):
         print(chunk, end="", flush=True)
     print()
 
