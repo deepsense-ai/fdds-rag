@@ -157,7 +157,10 @@ def parse_query() -> ChatFormat:
     """Parses the query from command line arguments.
 
     Returns:
-        str: The query string provided by the user.
+        ChatFormat: A list containing a single message dictionary with the user's query.
+
+    Raises:
+        SystemExit: If no query is provided in the command line arguments.
     """
     if len(sys.argv) < 2:
         print('Usage: uv run inference.py "<Your query here>"')
