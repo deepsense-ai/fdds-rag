@@ -26,6 +26,7 @@ class Config(BaseSettings):
     QDRANT_INGEST_URL: str = "http://localhost:6333"
     COLLECTION_NAME: str = "fdds"
     DOCUMENTS_PATH: Path = Path(__file__).parent.parent / "data" / "pdfs" / "pdfs.txt"
+
     EVAL_DATASET: Path = Path(__file__).parent.parent / "data" / "eval_dataset.json"
     EVAL_CONFIG: Path = Path(__file__).parent.parent / "data" / "eval_config.yaml"
 
