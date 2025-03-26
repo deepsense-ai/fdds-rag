@@ -12,6 +12,7 @@ class Config(BaseSettings):
     # API KEYS
     OPENAI_API_KEY: str
     NEPTUNE_API_KEY: str
+    QDRANT_API_KEY: str
 
     # MODELS
     EMBEDDING_MODEL: str = "text-embedding-3-small"

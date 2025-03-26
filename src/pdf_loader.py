@@ -71,7 +71,9 @@ async def ingest_pdf_documents(source_type: str) -> None:
     embedder = LiteLLMEmbedder(
         model=config.EMBEDDING_MODEL,
     )
-    qdrant_client = AsyncQdrantClient(url=config.QDRANT_INGEST_URL)
+    qdrant_client = AsyncQdrantClient(
+        url=config.QDRANT_INGEST_URL, api_key=config.QDRANT_API_KEY
+    )
     vector_store = QdrantVectorStore(
         client=qdrant_client,
         index_name=config.COLLECTION_NAME,
