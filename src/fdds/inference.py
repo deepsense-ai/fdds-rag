@@ -12,9 +12,7 @@ from ragbits.conversations.history.compressors.llm import StandaloneMessageCompr
 from typing import AsyncGenerator
 from qdrant_client import AsyncQdrantClient
 
-from src.config import Config
-
-config = Config()
+from fdds import config
 
 
 class QueryWithContext(BaseModel):

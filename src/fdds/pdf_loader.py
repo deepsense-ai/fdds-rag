@@ -9,10 +9,8 @@ from ragbits.document_search import DocumentSearch
 from ragbits.document_search.documents.sources import LocalFileSource, WebSource, Source
 from ragbits.document_search.documents.element import IntermediateImageElement
 
-from src.config import Config
-from src.handlers import NoImageIntermediateHandler
-
-config = Config()
+from fdds import config
+from fdds.handlers import NoImageIntermediateHandler
 
 
 async def ingest_documents(

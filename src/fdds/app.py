@@ -3,7 +3,7 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from ragbits.core.prompt import ChatFormat
 
-from src.inference import inference
+from fdds.inference import inference
 
 app = FastAPI()
 
@@ -18,12 +18,12 @@ async def read_root():
 
 
 @app.post(
-    "/inference/",
+    "/chat/",
     summary="Inference Endpoint",
     description="Performs inference based on input query and "
     "optionally provided conversation history",
 )
-async def get_inference(request: QueryRequest):
+async def chat(request: QueryRequest):
     """
     Perform model inference on the input query and provide a streaming response.
 

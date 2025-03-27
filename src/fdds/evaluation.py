@@ -8,9 +8,7 @@ from ragbits.evaluate.metrics.base import MetricSet
 from ragbits.evaluate.utils import log_evaluation_to_neptune
 
 from evaluation_pipeline import Pipeline
-from src.config import Config
-
-config = Config()
+from fdds import config
 
 
 def export_variables(variables: dict[str, str]):
