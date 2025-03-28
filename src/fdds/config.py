@@ -25,15 +25,21 @@ class Config(BaseSettings):
     QDRANT_URL: str = "http://qdrant:6333"
     QDRANT_INGEST_URL: str = "http://localhost:6333"
     COLLECTION_NAME: str = "fdds"
-    DOCUMENTS_PATH: Path = Path(__file__).parent.parent / "data" / "pdfs" / "pdfs.txt"
+    DOCUMENTS_PATH: Path = (
+        Path(__file__).parent.parent.parent / "data" / "pdfs" / "pdfs.txt"
+    )
 
-    EVAL_DATASET: Path = Path(__file__).parent.parent / "data" / "eval_dataset.json"
-    EVAL_CONFIG: Path = Path(__file__).parent.parent / "data" / "eval_config.yaml"
+    EVAL_DATASET: Path = (
+        Path(__file__).parent.parent.parent / "data" / "eval_dataset.json"
+    )
+    EVAL_CONFIG: Path = (
+        Path(__file__).parent.parent.parent / "data" / "eval_config.yaml"
+    )
 
     # RETRIEVE PARAMETERS
     TOP_K: PositiveInt = 5
     TOP_N: PositiveInt = 5
 
     class Config:
-        env_file = Path(__file__).parent.parent / ".env"
+        env_file = Path(__file__).parent.parent.parent / ".env"
         env_file_encoding = "utf-8"
