@@ -2,16 +2,17 @@ import asyncio
 import sys
 
 from pydantic import BaseModel
-from qdrant_client import AsyncQdrantClient
 from ragbits.core.embeddings.litellm import LiteLLMEmbedder
 from ragbits.core.llms.litellm import LiteLLM
-from ragbits.core.prompt import Prompt
+from ragbits.core.prompt import ChatFormat, Prompt
 from ragbits.core.vector_stores.qdrant import QdrantVectorStore
 from ragbits.document_search import DocumentSearch, SearchConfig
+from ragbits.document_search.documents.element import Element
+from ragbits.conversations.history.compressors.llm import StandaloneMessageCompressor
+from typing import AsyncGenerator
+from qdrant_client import AsyncQdrantClient
 
-from config import Config
-
-config = Config()
+from fdds import config
 
 
 class QueryWithContext(BaseModel):
@@ -52,6 +53,10 @@ class RAGPrompt(Prompt[QueryWithContext]):
     system_prompt = """
     You are a helpful assistant.
     Answer the QUESTION that will be provided using CONTEXT.
+    If the QUESTION asks where something is located, if possible,
+    try to provide the file url.
+
+    DO NOT INFORM THAT INFORMATION IS PROVIDED IN CONTEXT!
     If in the given CONTEXT there is not enough information refuse to answer.
     """
 
@@ -64,6 +69,15 @@ class RAGPrompt(Prompt[QueryWithContext]):
         {{ item }}
     {% endfor %}
     """
+
+
+def prepare_context(context: Element) -> str:
+    text = (
+        f"{context.text_representation} "
+        f"(source: {context.document_meta.source.url}, "
+        f"page: {context.location.page_number})"
+    )
+    return text
 
 
 async def get_contexts(question: str, top_k: int, top_n: int) -> list[str]:
@@ -96,7 +110,9 @@ async def get_contexts(question: str, top_k: int, top_n: int) -> list[str]:
     embedder = LiteLLMEmbedder(
         model=config.EMBEDDING_MODEL,
     )
-    qdrant_client = AsyncQdrantClient(url=config.QDRANT_URL)
+    qdrant_client = AsyncQdrantClient(
+        url=config.QDRANT_URL, api_key=config.QDRANT_API_KEY
+    )
     vector_store = QdrantVectorStore(
         client=qdrant_client,
         index_name=config.COLLECTION_NAME,
@@ -108,72 +124,85 @@ async def get_contexts(question: str, top_k: int, top_n: int) -> list[str]:
         SearchConfig(vector_store_kwargs={"k": top_k}),
     )
 
-    texts = [context.text_representation for context in contexts]
+    texts = [prepare_context(context) for context in contexts]
     return texts
 
 
-async def inference(query: str) -> None:
+async def inference(query_with_history: ChatFormat) -> AsyncGenerator[str, None]:
     """
     Generate an AI-powered response to a query using retrieval-augmented generation.
 
-    This function retrieves relevant contexts for the input query,
-    constructs a prompt using the `RAGPrompt` class,
-    and generates a response using a language model.
-    The response is printed in real-time directly to the console.
+    This function retrieves relevant contexts for the input query, optionally compresses
+    and includes the conversation history, constructs a prompt using the `RAGPrompt`
+    class, and generates a response using a language model. The response is streamed in
+    real-time in chunks.
 
     Args:
-        query (str): The user’s question or input.
+        query_with_history (ChatFormat):
+            The combined conversation history and current query
+            to be included in the response generation.
 
-    Returns:
-        None
+    Yields:
+        str: Chunks of the generated response.
 
     Dependencies:
-        - LiteLLM:
-            Handles response generation from the language model.
-        - get_contexts:
-            Fetches relevant contexts for the query.
-        - RAGPrompt:
-            Creates a structured prompt with the query and contexts.
+        - LiteLLM: Handles response generation from the language model.
+        - get_contexts: Fetches relevant contexts for the query.
+        - RAGPrompt: Creates a structured prompt with the query and contexts.
+        - StandaloneMessageCompressor:
+            Compresses the conversation input (history + query)
+            before appending it to the context.
     """
+    llm = LiteLLM(model_name=config.MODEL_NAME, api_key=config.OPENAI_API_KEY)
+
+    compressor = StandaloneMessageCompressor(llm=llm)
+    query = await compressor.compress(query_with_history)
 
     context = await get_contexts(query, top_k=config.TOP_K, top_n=config.TOP_N)
-    llm = LiteLLM(model_name=config.MODEL_NAME, api_key=config.OPENAI_API_KEY)
     stream = llm.generate_streaming(
         prompt=RAGPrompt(QueryWithContext(query=query, context=context)),
     )
-
     async for chunk in stream:
-        print(chunk, end="")
-        sys.stdout.flush()
-    print()
+        yield chunk
 
 
-def parse_query() -> str:
+def parse_query() -> ChatFormat:
     """Parses the query from command line arguments.
 
     Returns:
-        str: The query string provided by the user.
+        ChatFormat: A list containing a single message dictionary with the user's query.
+
+    Raises:
+        SystemExit: If no query is provided in the command line arguments.
     """
     if len(sys.argv) < 2:
         print('Usage: uv run inference.py "<Your query here>"')
         sys.exit(1)
 
-    return sys.argv[1]
+    conversation = [
+        {
+            "role": "user",
+            "content": sys.argv[1],
+        }
+    ]
+    return conversation
 
 
 async def main() -> None:
     """
     Main function that orchestrates the inference process.
 
-    This function validates the configuration, parses the query, and
-    then performs inference asynchronously based on the parsed query.
+    This function parses the query, and then performs inference
+    asynchronously based on the parsed query.
     The result of the inference is printed to the console.
 
     Returns:
         None
     """
-    query = parse_query()
-    await inference(query)
+    conversation = parse_query()
+    async for chunk in inference(conversation):
+        print(chunk, end="", flush=True)
+    print()
 
 
 if __name__ == "__main__":

@@ -12,15 +12,21 @@ class Config(BaseSettings):
     # API KEYS
     OPENAI_API_KEY: str
     NEPTUNE_API_KEY: str
+    QDRANT_API_KEY: str
 
     # MODELS
     EMBEDDING_MODEL: str = "text-embedding-3-small"
     MODEL_NAME: str = "gpt-4o-mini"
 
+    # FAST-API
+    API_URL: str = "http://localhost:8000"
+
     # DATA
-    QDRANT_URL: str = "http://localhost:6333"
+    QDRANT_URL: str = "http://qdrant:6333"
+    QDRANT_INGEST_URL: str = "http://localhost:6333"
     COLLECTION_NAME: str = "fdds"
-    DOCUMENTS_PATH: Path = Path(__file__).parent.parent / "data" / "pdfs.txt"
+    DOCUMENTS_PATH: Path = Path(__file__).parent.parent / "data" / "pdfs" / "pdfs.txt"
+
     EVAL_DATASET: Path = Path(__file__).parent.parent / "data" / "eval_dataset.json"
     EVAL_CONFIG: Path = Path(__file__).parent.parent / "data" / "eval_config.yaml"
 

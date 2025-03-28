@@ -7,7 +7,15 @@ services:
     volumes:
       - ./data/qdrant:/qdrant/storage
     environment:
+      QDRANT__SERVICE__API_KEY: "${QDRANT_API_KEY}"
       QDRANT__SERVICE__GRPC_PORT: 6334
-
+  fastapi:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      QDRANT_HOST: qdrant
+    depends_on:
+        - qdrant
 volumes:
   qdrant_data:
