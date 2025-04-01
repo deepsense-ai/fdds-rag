@@ -9,6 +9,13 @@ services:
     environment:
       QDRANT__SERVICE__API_KEY: "${QDRANT_API_KEY}"
       QDRANT__SERVICE__GRPC_PORT: 6334
+    logging:
+      driver: "awslogs"
+      options:
+        awslogs-group: "/ecs/qdrant-log-group"
+        awslogs-stream: "qdrant-log-stream"
+        awslogs-region: "eu-north-1"
+
   fastapi:
     build: .
     ports:
@@ -16,6 +23,13 @@ services:
     environment:
       QDRANT_HOST: qdrant
     depends_on:
-        - qdrant
+      - qdrant
+    logging:
+      driver: "awslogs"
+      options:
+        awslogs-group: "/ecs/fastapi-log-group"
+        awslogs-stream: "fastapi-log-stream"
+        awslogs-region: "eu-north-1"
+
 volumes:
   qdrant_data:
