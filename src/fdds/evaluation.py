@@ -41,6 +41,9 @@ async def main(evaluation_config: DictConfig) -> None:
             "NEPTUNE_API_TOKEN": config.NEPTUNE_API_KEY,
         }
     )
+    evaluation_config.pipeline.vector_store.config.client.config.api_key = (
+        config.QDRANT_API_KEY
+    )
 
     pipeline = Pipeline(evaluation_config.pipeline)
     pipeline.config = evaluation_config.pipeline
