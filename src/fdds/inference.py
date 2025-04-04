@@ -53,8 +53,8 @@ class RAGPrompt(Prompt[QueryWithContext]):
     system_prompt = """
     You are a helpful assistant.
     Answer the QUESTION that will be provided using CONTEXT.
-    If the QUESTION asks where something is located, if possible,
-    try to provide the file url.
+    If the QUESTION asks where something is located,
+    if possible, try to provide the file url.
 
     DO NOT INFORM THAT INFORMATION IS PROVIDED IN CONTEXT!
     If in the given CONTEXT there is not enough information refuse to answer.
@@ -80,7 +80,7 @@ def prepare_context(context: Element) -> str:
     return text
 
 
-async def get_contexts(question: str, top_k: int, top_n: int) -> list[str]:
+async def get_contexts(question: str, top_k: int) -> list[str]:
     """
     Retrieve the most relevant context documents for a given question
     using a vector store.
@@ -94,11 +94,9 @@ async def get_contexts(question: str, top_k: int, top_n: int) -> list[str]:
             The question to search for relevant contexts.
         top_k (int):
             The number of top relevant contexts to retrieve from the vector store.
-        top_n (int):
-            The number of top reranked contexts to return.
 
     Returns:
-        list[str]: A list of the top-n reranked context strings.
+        list[str]: A list of the top-k context strings.
 
     Dependencies:
         - LiteLLMEmbedder: Generates embeddings for the question.
@@ -158,7 +156,7 @@ async def inference(query_with_history: ChatFormat) -> AsyncGenerator[str, None]
     compressor = StandaloneMessageCompressor(llm=llm)
     query = await compressor.compress(query_with_history)
 
-    context = await get_contexts(query, top_k=config.TOP_K, top_n=config.TOP_N)
+    context = await get_contexts(query, top_k=config.TOP_K)
     stream = llm.generate_streaming(
         prompt=RAGPrompt(QueryWithContext(query=query, context=context)),
     )

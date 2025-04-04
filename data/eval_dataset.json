@@ -97,7 +97,7 @@
         },
         {
             "question": "Jakie są krzywdzące zachowania seksualne wobec dzieci bez podjęcia kontaktu fizycznego?",
-            "gt_passages": "pokazywanie dziecku materiałów pornograficznych;\npokazywanie dziecku genitaliów swoich lub innej osoby w celu jego\nerotyzacji;\nobnażanie dziecka niezwiązane ze sprawowaniem nad nim opieki\nlub jego leczenia;\nfotografowanie dziecka w celu tworzenia obrazów o charakterze\npornograficznym i erotycznym;\nzachęcanie dziecka do obserwowania lub słuchania aktów seksualnych – rzeczywistych bądź odtwarzanych (np. z internetu albo z innych nośników elektronicznych);\nprowadzenie z dzieckiem rozmów o treści erotycznej wykraczającej\npoza edukację seksualną."
+            "gt_passages": "pokazywanie dziecku materiałów pornograficznych; pokazywanie dziecku genitaliów swoich lub innej osoby w celu jego erotyzacji; obnażanie dziecka niezwiązane ze sprawowaniem nad nim opieki lub jego leczenia; fotografowanie dziecka w celu tworzenia obrazów o charakterze pornograficznym i erotycznym; zachęcanie dziecka do obserwowania lub słuchania aktów seksualnych – rzeczywistych bądź odtwarzanych (np. z internetu albo z innych nośników elektronicznych); prowadzenie z dzieckiem rozmów o treści erotycznej wykraczającej poza edukację seksualną."
         },
         {
             "question": "Czy pokazywanie dziecku materiałów pornograficznych jest krzywdzącym zachowaniem?",
@@ -105,7 +105,7 @@
         },
         {
             "question": "Czy pornografia jest obecna wśród dzieci?",
-            "gt_passages": "Tak, 43% dzieci i nastolatków w Polsce miało kontakt z pornografią\nw internecie"
+            "gt_passages": "Tak, 43% dzieci i nastolatków w Polsce miało kontakt z pornografią w internecie"
         },
         {
             "question": "Moje dziecko ma 15 lat i nie jest wstanie utrzymać związku dłużej niż pół roku, czy to źle?",
@@ -113,10 +113,158 @@
         },
         {
             "question": "Czy mogę rozmawiać z moim dzieckiem o wykorzystaniu?",
-            "gt_passages": "Zrób, co możesz, by pomóc dziecku mówić o tym, co je spotkało. Skup\nna nim całą swoją uwagę, odłóż komórkę, oderwij się od innych zajęć.\nUsiądź blisko dziecka, ale w takiej odległości, aby nie czuło się ono przytłoczone twoja osobą. Okaż cierpliwość, nie popędzaj dziecka, nie zarzucaj pytaniami i swoimi wątpliwościami. Panuj nad emocjami. Teraz\nnajważniejszy jest komfort dziecka, a nie twoje przerażenie, wściekłość\nczy rozpacz. Daj mu bliskość, ale nie zmuszaj do kontaktu fizycznego.\nZadając dziecku pytania, uważaj na to, aby nie były one sugerujące,\nobwiniające je, czy podważające jego wiarygodność."
+            "gt_passages": "Zrób, co możesz, by pomóc dziecku mówić o tym, co je spotkało. Skup na nim całą swoją uwagę, odłóż komórkę, oderwij się od innych zajęć. Usiądź blisko dziecka, ale w takiej odległości, aby nie czuło się ono przytłoczone twoja osobą. Okaż cierpliwość, nie popędzaj dziecka, nie zarzucaj pytaniami i swoimi wątpliwościami. Panuj nad emocjami. Teraz najważniejszy jest komfort dziecka, a nie twoje przerażenie, wściekłośćczy rozpacz. Daj mu bliskość, ale nie zmuszaj do kontaktu fizycznego. Zadając dziecku pytania, uważaj na to, aby nie były one sugerujące, obwiniające je, czy podważające jego wiarygodność."
         },
         {
-            "question": "Jestem z Głogowa, gdzie mogę s=uzyskać pomoc w sprawie wykorzystywania seksualnego mojego dziecka?",
-            "gt_passages": "Centrum Pomocy Dzieciom, Głogów\nStowarzyszenie dla Dzieci i Młodzieży SZANSA w Głogowie\nul. Perseusza 13, 67-200 Głogów\ntel.: 76 727 60 70, e-mail: biuro@szansa.glogow.pl"
+            "question": "Jestem z Głogowa, gdzie mogę uzyskać pomoc w sprawie wykorzystywania seksualnego mojego dziecka?",
+            "gt_passages": "Centrum Pomocy Dzieciom, Głogów Stowarzyszenie dla Dzieci i Młodzieży SZANSA w Głogowie ul. Perseusza 13, 67-200 Głogów tel.: 76 727 60 70, e-mail: biuro@szansa.glogow.pl"
+        },
+        {
+            "question": "Czy klaps jest zły?",
+            "gt_passages": "Tak! Klapsy wywołują strach, a strach ogłupia. Oczywiście, klapsy powstrzymują dzieci przed robieniem czegoś, czego nie wolno im robić, ale nie skłaniają ich do właściwych zachowań. Uderzone dziecko poddaje się, a przynajmniej przestaje zachowywać się „niegrzecznie” w danej chwili, lecz nie uczy się, jak powinno postępować. Doświadcza tego, że silniejsi osiągają swoje cele siłą. Co więcej, czuje się upokorzone, ma zranioną godność. Te uczucia tkwią w nim jeszcze długo po tym, jak policzek przestaje piec, znikają czerwone ślady po uderzeniu, ustaje ból pośladków. Dziecko bite doznaje krzywdy od najbliższych, na których polega najbardziej na świecie. Uważa więc, że jest złe i bezwartościowe."
+        },
+        {
+            "question": "Jakich rodziców potrzebują dzieci?",
+            "gt_passages": "W sytuacjach konfliktowych dzieci potrzebują rodziców, którzy: potrafią zachować dystans, nie tracą panowania nad sobą, nie tupią ze złości jak trzylatek. Bez przemocy wszystko staje się lepsze i łatwiejsze – ale to nie dzieje się samo."
+        },
+        {
+            "question": "Czy dziecko ma prawo do wysłuchania?",
+            "gt_passages": "Tak! W dążeniu do realizowania prawa dziecka do bycia wysłuchanym w sprawach go dotyczących, w sposób gwarantujący uwzględnienie jego stopnia rozwoju, poglądów, potrzeb oraz chroniąc jego dobro, rekomenduje się osobom uczestniczącym w wysłuchaniu dziecka – sędziom oraz biegłym psychologom określone wytyczne."
+        },
+        {
+            "question": "W jakich sprawach wysłuchiwać dzieci?",
+            "gt_passages": "Zaleca się przeprowadzenie wysłuchania, o ile okoliczności wskazane w art. 2161 i 576 §2 kpc na to pozwalają, w szczególności w sprawach o: władzę rodzicielską, relację z opiekunem prawnym dziecka, kontakty z dzieckiem, rozwód/separację, orzeczenie lub rozwiązanie przysposobienia, przeniesienie w ramach różnych form pieczy zastępczej lub jej rozwiązanie, wydanie dziecka od osoby nieuprawnionej."
+        },
+        {
+            "question": "Jakie są główne formy krzywdzenia?",
+            "gt_passages": "Do czterech, głównych form krzywdzenia, na które narażone są dzieci zaliczamy przemoc fizyczną, psychiczną (emocjonalną), seksualną (w tym wykorzystanie seksualne oraz zaniedbanie."
+        },
+        {
+            "question": "Jak małe dzieci pamiętają przemoc doświadczaną w pierwszych miesiącach czy latach życia?",
+            "gt_passages": "W pierwszym okresie życia najważniejszym odniesieniem dla dziecka jest matka: w drodze tworzonych z nią interakcji niektóre połączenia są wzmacniane, utrwalane przez powtarzane wielokrotnie oświadczenia, inne natomiast słabną lub całkowicie zanikają. Pierwsze trzy lata dziecka to również czas tzw. okresów krytycznych dla kształtowania się określonych umiejętności i funkcji, co przedstawia wykres. Jeśli w tym czasie wystąpią jakieś zaburzenia czy deficyty (np. brak bodźców dźwiękowych dla formowania się słuchu), dana umiejętność może się prawidłowo nie wykształcić."
+        },
+        {
+            "question": "Czym jest wykorzystywanie seksualne?",
+            "gt_passages": "Zgodnie z definicją Finkelhora (1986) wykorzystanie seksualne dziecka to angażowanie go przez dorosłego w jakąkolwiek aktywność seksualną niezależnie od motywów. W polskim prawodawstwie wykorzystywanie seksualne jest przestępstwem, a granica wieku młodej osoby, której to przestępstwo dotyczy to 15 rok życia."
+        },
+        {
+            "question": "Czy łatwo stwierdzić czy dziecko doświadczyło wykorzystania seksualnego?",
+            "gt_passages": "Wykorzystywanie seksualne dzieci jest tą formą krzywdzenia, którą najtrudniej zdiagnozować. Dzieci rzadko wprost ujawniają fakt wykorzystania seksualnego. Wyjątkowa drażliwość problemu oraz brak wiedzy profesjonalistów i innych dorosłych na temat tego zjawiska sprawiają, że często tylko ewidentne i drastyczne jego formy zostają zidentyfikowane i powodują podjęcie interwencji."
+        },
+        {
+            "question": "Jakie znaczenie dla dobra dziecka ma język, którego używamy?",
+            "gt_passages": "Język kształtuje naszą rzeczywistość. Komunikacja ma decydujące znaczenie w naszych działaniach na rzecz respektowania, ochrony i realizacji praw dziecka. Aby uczynić komunikację możliwie efektywną, musimy posługiwać się terminami i pojęciami, które będą zrozumiałe dla wszystkich i pełne szacunku dla dzieci."
+        },
+        {
+            "question": "Kto powinien zawiadomić o popełnieniu przestępstwa?",
+            "gt_passages": "Obowiązkiem osoby, która dowiedziała się o przestępstwie jest złożenie zawiadomienia o podejrzeniu popełnienia przestępstwa. Zawiadomienie należy złożyć pisemnie lub ustnie w prokuraturze albo na policji."
+        },
+        {
+            "question": "Czy będę wiedzieć co się dzieje w sprawie, o której zawiadomiłem/am?",
+            "gt_passages": "Jeżeli zawiadomienie o podejrzeniu popełnienia przestępstwa zostało złożone przez Ciebie, prokurator ma obowiązek zawiadomić Cię pisemnie o wszczęciu, odmowie wszczęcia albo o umorzeniu postępowania przygotowawczego"
+        },
+        {
+            "question": "Czego dotyczą artykuły art. 185a i 185b kpk?",
+            "gt_passages": "Przepisy prawne art. 185a i 185b Kodeksu postępowania karnego zapewniają dzieciom szczególne warunki przesłuchania."
+        },
+        {
+            "question": "Gdzie znajdę informacje o ochronie dzieci przed cyberprzemocą?",
+            "gt_passages": "Oto sekcja, której szukasz: Bezpieczeństwo dzieci i młodzieży w internecie. Możesz też przejrzeć inne zasoby, w tym podcasty FDDS, które znajdują się: Materiały edukacyjne dotyczące bezpieczeństwa dzieci i młodzieży w internecie."
+        },
+        {
+            "question": "Gdzie znajdę materiały na temat praw dziecka podczas przesłuchania?",
+            "gt_passages": "Informacje dotyczące praw dziecka podczas przesłuchania znajdziesz w sekcji: Dzieci uczestniczące w procedurach prawnych. Możesz także przejrzeć inne zasoby, w tym podcasty FDDS, które znajdują się: Materiały edukacyjne dotyczące uczestniczenia dzieci w procedurach prawnych."
+        },
+        {
+            "question": "Gdzie mogę znaleźć informacje o procedurach prawnych dotyczących dzieci?",
+            "gt_passages": "Informacje o procedurach prawnych dotyczących dzieci znajdziesz w sekcji: Dzieci uczestniczące w procedurach prawnych. Możesz także przejrzeć inne zasoby, w tym podcasty FDDS, które znajdują się: Materiały edukacyjne dotyczące uczestniczenia dzieci w procedurach prawnych."
+        },
+        {
+            "question": "Gdzie mogę znaleźć informacje o procedurach Niebieskiej Karty?",
+            "gt_passages": "Informacje o procedurach prawnych dotyczących dzieci znajdziesz w sekcji: Dzieci uczestniczące w procedurach prawnych. Możesz także przejrzeć inne zasoby, w tym podcasty FDDS, które znajdują się: Materiały edukacyjne dotyczące uczestniczenia dzieci w procedurach prawnych."
+        },
+        {
+            "question": "Gdzie mogę znaleźć raporty i analizy FDDS dotyczące ochrony dzieci?",
+            "gt_passages": "Raporty i analizy dotyczące ochrony dzieci publikowane przez FDDS są dostępne: Raporty z badań."
+        },
+        {
+            "question": "Gdzie znajdę materiały dotyczące przemocy i wykorzystywania seksualnego dzieci?",
+            "gt_passages": "Materiały te znajdziesz w sekcji: Przemoc i wykorzystywanie seksualne dzieci. Możesz także przejrzeć inne zasoby: Materiały edukacyjne dotyczące przemocy i wykorzystywanie seksualnego dzieci."
+        },
+        {
+            "question": "Gdzie znajdę materiały edukacyjne dla rodziców?",
+            "gt_passages": "Materiały edukacyjne dla rodziców znajdziesz w sekcji: Rodzicielstwo i wychowanie. Możesz też przejrzeć inne zasoby, w tym podcasty FDDS, które znajdują się: Materiały edukacyjne dotyczące rodzicielstwa i wychowania."
+        },
+        {
+            "question": "Gdzie mogę znaleźć materiały edukacyjne na temat Standardów Ochrony Dzieci?",
+            "gt_passages": "Materiały edukacyjne, takie jak broszury, nagrania webinarów i informacje, są dostępne na dedykowanej stronie Standardy Ochrony Dzieci. Możesz je znaleźć: standardy.fdds.pl."
+        },
+        {
+            "question": "Gdzie mogę znaleźć materiały dotyczące wsparcia dzieci uchodźczych?",
+            "gt_passages": "Materiały dostępne są w języku polskim, ukraińskim, rosyjskim oraz angielskim i znajdują się w sekcji: Dzieci w kryzysie uchodźczym."
+        },
+        {
+            "question": "Gdzie znajdę materiały edukacyjne dla nauczycieli?",
+            "gt_passages": "Materiały edukacyjne dla nauczycieli znajdziesz w sekcji: Kursy dla dzieci i młodzieży."
+        },
+        {
+            "question": "Gdzie mogę znaleźć informacje dotyczące pornografii dziecięcej?",
+            "gt_passages": "Informacje o pornografii dziecięcej znajdziesz w sekcji: Bezpieczeństwo dzieci i młodzieży w internecie. Dodatkowo zachęcamy do przejrzenia innych materiałów edukacyjnych dotyczących bezpieczeństwa dzieci i młodzieży w internecie: Materiały edukacyjne dotyczące bezpieczeństwa dzieci i młodzieży w internecie."
+        },
+        {
+            "question": "Jakie są dostępne dokumenty na temat ochrony dzieci przed wykorzystywaniem seksualnym?",
+            "gt_passages": "Polecamy poradniki zarówno dla rodziców oraz profesjonalistów: Jak chronić dzieci przed wykorzystywaniem seksualnym? Poradnik dla rodziców, Jak chronić dzieci przed wykorzystywaniem seksualnym. Dodatkowo zachęcamy do przejrzenia pozostałych materiałów edukacyjnych, które znajdują się w sekcji: Przemoc i wykorzystywanie seksualne dzieci."
+        },
+        {
+            "question": "Jakie są dostępne dokumenty na temat rozpoznania krzywdzenia dziecka?",
+            "gt_passages": "Polecane materiały dotyczące tematu krzywdzenia dziecka to m.in. Podręcznik poświęcony problemowi wykorzystywaniu seksualnemu dzieci: Dziecko wykorzystywane seksualnie. Diagnoza, interwencja, pomoc psychologiczna czy prezentacje multimedialne: Problem krzywdzenia dzieci. Symptomy i konsekwencje, Rozpoznawanie krzywdzenia dzieci. Rozmowa z dzieckiem. Dodatkowo zachęcamy do przejrzenia pozostałych materiałów edukacyjnych, które znajdują się w sekcji: Przemoc i wykorzystywanie seksualne dzieci oraz podcastów FDDS: Podcasty."
+        },
+        {
+            "question": "Jakie są dostępne materiały na temat przemocy rówieśniczej?",
+            "gt_passages": "Materiały dotyczące przemocy rówieśniczej znajdziesz tutaj: Przemoc rówieśnicza. Charakterystyka, diagnoza, profilaktyka. Polecamy również scenariusze zajęć dla profesjonalistów: Przemoc rówieśnicza, a także inne materiały edukacyjne: Przemoc i wykorzystywanie seksualne dzieci oraz podcasty FDDS: Podcasty."
+        },
+        {
+            "question": "Jakie są dostępne materiały na temat pracy z dzieci z doświadczeniem migracyjnym?",
+            "gt_passages": "Materiały do pracy z doświadczeniem migracyjnym szukaj w sekcji: Dzieci w kryzysie uchodźczym. Możesz też zobaczyć nasze scenariusze zajęć dla profesjonalistów pracujących z dziećmi uchodźczymi: Mam prawo czuć się bezpiecznie (7-12lat) oraz Mam prawo czuć się bezpiecznie (13-16lat)."
+        },
+        {
+            "question": "Jakie dokumenty opisują procedury Niebieskiej Karty?",
+            "gt_passages": "Dokumenty dotyczące procedur Niebieskiej Karty można znaleźć w sekcji: Dzieci uczestniczące w procedurach prawnych. W tej sekcji znajdziesz również materiały związane z interwencją i wsparciem dzieci."
+        },
+        {
+            "question": "Jakie są dostępne dokumenty dotyczące cyberprzemocy dla profesjonalistów pracujących z dziećmi i młodzieżą?",
+            "gt_passages": "Dokumenty dotyczące cyberprzemocy wśród dzieci i młodzieży to m.in.: kompendium wiedzy na temat rozwiązywania problemów z zagrożeniami internetowymi dotyczącymi dzieci i młodzieży: Szkolne standardy bezpieczeństwa dzieci i młodzieży online, czy scenariusz zajęć dla rodziców: Uważni online, czyli jak zapobiegać uwodzeniu dzieci online."
+        },
+        {
+            "question": "Jak mogę zapisać się na nadchodzące szkolenia?",
+            "gt_passages": "Zapisy na szkolenia znajdziesz w sekcji: Szkolenia i konferencje. Możesz także sprawdzić nadchodzące wydarzenia w aktualnościach FDDS: Aktualności."
+        },
+        {
+            "question": "Gdzie znajdę informacje o szkoleniach?",
+            "gt_passages": "Informacje o szkoleniach znajdziesz w sekcji: Szkolenia i konferencje. Możesz także sprawdzić nadchodzące wydarzenia w aktualnościach FDDS: Aktualności."
+        },
+        {
+            "question": "Czy Fundacja Dajemy Dzieciom Siłę organizuje bezpłatne szkolenia?",
+            "gt_passages": "Tak, wszelkie informacje dotyczące bezpłatnych szkoleń znajdziesz w sekcji: Szkolenia i konferencje oraz w aktualnościach FDDS: Aktualności."
+        },
+        {
+            "question": "Czy Fundacja Dajemy Dzieciom Siłę organizuje szkolenia komercyjne?",
+            "gt_passages": "Tak, szkolenia komercyjne znajdują się w ofercie FDDS. Informacje o szkoleniach znajdziesz w sekcji: Szkolenia na zamówienie. Dodatkowo zachęcamy do przejrzenia bezpłatnych szkoleń, które znaleźć można w sekcji: Szkolenia i konferencje oraz w aktualnościach FDDS: Aktualności."
+        },
+        {
+            "question": "Mam podejrzenie, że jedno z dzieci w mojej klasie doświadcza przemocy domowej. Czy powinnam zgłosić to do odpowiednich służb?",
+            "gt_passages": "Tak, w przypadku podejrzenia przemocy domowej należy niezwłocznie zgłosić sprawę do odpowiednich służb, takich jak policja czy ośrodek pomocy społecznej. Możesz także skorzystać ze ścieżki procedury postępowania w przypadku podejrzenia krzywdzenia dostępnej: Procedury interwencji w przypadku krzywdzenia dzieci."
+        },
+        {
+            "question": "Pracuję z dzieckiem, które jest ofiarą cyberprzemocy. Jakie kroki mogę podjąć, aby mu pomóc?",
+            "gt_passages": "Możesz zacząć od zgłoszenia incydentu i zapewnienia dziecku wsparcia psychologicznego. Polecamy zapoznać się z naszym Kompendium wiedzy na temat rozwiązywania problemów z zagrożeniami internetowymi dotyczącymi dzieci i młodzieży: Szkolne standardy bezpieczeństwa dzieci i młodzieży online."
+        },
+        {
+            "question": "Gdzie mogę zgłosić przypadek przemocy, aby rozpocząć procedurę Niebieskiej Karty?",
+            "gt_passages": "Informacje o zgłaszaniu przypadków przemocy i rozpoczynaniu procedury Niebieskiej Karty są dostępne w sekcji: Niebieska Karta."
+        },
+        {
+            "question": "Jak przebiega procedura Niebieskiej Karty?",
+            "gt_passages": "Procedura Niebieskiej Karty jest szczegółowo opisana w sekcji: Niebieska Karta. Znajdziesz tam informacje o krokach i działaniach podejmowanych w ramach tej procedury. Dodatkowe informacje znajdziesz w poradniku dla członków zespołów interdyscyplinarnych i grup roboczych: Uwaga dziecko!Realizacja procedury 'Niebieskie Karty' w sytuacji przemocy w rodzinie wobec dziecka."
         }
-    ]
+]

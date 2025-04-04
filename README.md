@@ -4,11 +4,15 @@
 ```
 .
 ├── docker-compose.yml
-├── src
+├── Dockerfile
+├── src/fdds
 │   ├── __init__.py
+│   ├── app.py
 │   ├── inference.py
 │   ├── pdf_loader.py
 │   ├── handlers.py
+│   ├── evaluation.py
+│   ├── evaluation_pipeline.py
 │   └── config.py
 ├── data
 │   ├── qdrant
@@ -22,10 +26,11 @@
 ## Key Components
 - `data/pdfs`: directory for storing your PDF files.
 - `data/qdrant`: local volume for Qdrant's data persistence.
-- `docker-compose.yml` configures the Qdrant service and manages local volumes.
-- `src/inference.py` contains methods to process a query and generate responses based on contextual data using RAG.
-- `src/pdf_loader.py` loads and processes PDF files from the `data/pdfs` directory into Qdrant.
-- `src/config.py` holds configuration settings for the project.
+- `docker-compose.yml` configures the Qdrant service and API (for the API see also `Dockerfile`).
+- `src/fdds/inference.py` contains methods to process a query and generate responses based on contextual data using RAG.
+- `src/fdds/pdf_loader.py` loads and processes PDF files from the `data/pdfs` directory into Qdrant.
+- `src/fdds/evaluation.py` Evaluates RAG using a defined pipeline in the `src/fdds/evaluation_pipeline.py` file.
+- `src/fdds/config.py` holds configuration settings for the project.
 - `pyproject.toml` and `uv.lock`: configuration files for uv and project dependencies.
 - `.pre-commit-config.yaml`: configuration for pre-commit hooks to ensure code quality.
 
@@ -53,10 +58,12 @@ pre-commit install
 ### 4. Configure settings:
 Ensure you created a `.env` file in the project root directory with all needed variables which are listed below:
 ```
+OPEN_API_KEY=<your_api_key>
+NEPTUNE_API_KEY=<your_api_key>
+QDRANT_API_KEY=<your_api_key>
 API_KEY=<your_api_key>
-COHERE_API_KEY=<your_api_key>
 ```
-Replace the placeholders with your actual credentials and settings, and modify src/config.py to ensure it holds all necessary configurations like paths and connection details.
+Replace the placeholders with your actual credentials and settings, and modify `src/fdds/config.py` to ensure it holds all necessary configurations like paths and connection details.
 ### 5. Start the Qdrant service:
 Before using docker-compose ensure that Docker is running.
 ```
