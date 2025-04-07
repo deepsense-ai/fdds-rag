@@ -24,4 +24,4 @@ allow-direct-references = true
 packages = ["src/fdds"]
 
 [tool.uv.sources]
-ragbits-api = { path = "../ragbits/packages/ragbits-api" }
+ragbits-api = { path = "./ragbits/packages/ragbits-api" }
