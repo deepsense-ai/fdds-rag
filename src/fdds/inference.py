@@ -106,7 +106,7 @@ async def get_contexts(question: str, top_k: int) -> list[str]:
         - LiteLLMReranker: Reranks the retrieved contexts for better relevance.
     """
     embedder = LiteLLMEmbedder(
-        model=config.EMBEDDING_MODEL,
+        model_name=config.EMBEDDING_MODEL,
     )
     qdrant_client = AsyncQdrantClient(
         url=config.QDRANT_URL, api_key=config.QDRANT_API_KEY

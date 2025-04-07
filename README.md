@@ -85,5 +85,9 @@ uv run src/pdf_loader.py
 ```
 ### 8. Run a query with the RAG model:
 ```bash
-uv run src/inference.py "<Your query here>"
+uv run src/inference.py "<Your query in ChatFormat>"
+```
+### 9. Run API:
+```bash
+ragbits api run --chat-path chat:MyChat
 ```

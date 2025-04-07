@@ -11,6 +11,7 @@ dependencies = [
     "unstructured[pdf]>=0.17.2",
     "fastapi[standard]>=0.115.11",
     "scrapy>=2.12.0",
+    "ragbits-api",
 ]
 [build-system]
 requires = ["hatchling"]
@@ -21,3 +22,6 @@ allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/fdds"]
+
+[tool.uv.sources]
+ragbits-api = { path = "../ragbits/packages/ragbits-api" }
