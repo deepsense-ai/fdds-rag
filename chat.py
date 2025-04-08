@@ -19,7 +19,10 @@ class MyChat(ChatInterface):
     ) -> AsyncGenerator[ChatResponse, None]:
         async for chunk in inference(
             [
-                *[{"role": el.role.value, "content": el.content} for el in history],
+                *[
+                    {"role": element.role.value, "content": element.content}
+                    for element in history
+                ],
                 {"role": "user", "content": message},
             ]
         ):
