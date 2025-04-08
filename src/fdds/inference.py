@@ -80,7 +80,7 @@ def prepare_context(context: Element) -> str:
     return text
 
 
-async def get_contexts(question: str, top_k: int) -> list[str]:
+async def get_contexts(question: str, top_k: int) -> tuple[list[str], set[str]]:
     """
     Retrieve the most relevant context documents for a given question
     using a vector store.
@@ -96,7 +96,10 @@ async def get_contexts(question: str, top_k: int) -> list[str]:
             The number of top relevant contexts to retrieve from the vector store.
 
     Returns:
-        list[str]: A list of the top-k context strings.
+        tuple[list[str], set[str]]: A tuple containing two elements:
+            - A list of the top-k context strings.
+            - A set of unique sources (`set[str]`) corresponding to the context strings,
+            ensuring no duplicates.
 
     Dependencies:
         - LiteLLMEmbedder: Generates embeddings for the question.
@@ -123,7 +126,8 @@ async def get_contexts(question: str, top_k: int) -> list[str]:
     )
 
     texts = [prepare_context(context) for context in contexts]
-    return texts
+    sources = set([context.document_meta.source.url for context in contexts])
+    return texts, sources
 
 
 async def inference(query_with_history: ChatFormat) -> AsyncGenerator[str, None]:
@@ -156,12 +160,17 @@ async def inference(query_with_history: ChatFormat) -> AsyncGenerator[str, None]
     compressor = StandaloneMessageCompressor(llm=llm)
     query = await compressor.compress(query_with_history)
 
-    context = await get_contexts(query, top_k=config.TOP_K)
+    context, sources = await get_contexts(query, top_k=config.TOP_K)
     stream = llm.generate_streaming(
         prompt=RAGPrompt(QueryWithContext(query=query, context=context)),
     )
     async for chunk in stream:
         yield chunk
+
+    sources_str = "\n\nPowiązane materiały: \n" + "\n".join(
+        [f"- {source}" for source in sources]
+    )
+    yield sources_str
 
 
 def parse_query() -> ChatFormat:

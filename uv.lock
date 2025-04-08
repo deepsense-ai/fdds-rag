@@ -828,8 +828,8 @@ requires-dist = [
     { name = "fastapi", extras = ["standard"], specifier = ">=0.115.11" },
     { name = "pre-commit", specifier = ">=4.1.0" },
     { name = "pydantic-settings", specifier = ">=2.8.1" },
-    { name = "ragbits", extras = ["qdrant"], specifier = ">=0.10.2" },
-    { name = "ragbits-api", directory = "../ragbits/packages/ragbits-api" },
+    { name = "ragbits", extras = ["qdrant"], directory = "ragbits/packages/ragbits" },
+    { name = "ragbits-api", directory = "ragbits/packages/ragbits-api" },
     { name = "ragbits-evaluate", extras = ["relari"], specifier = ">=0.10.2" },
     { name = "scrapy", specifier = ">=2.12.0" },
     { name = "unstructured", extras = ["pdf"], specifier = ">=0.17.2" },
@@ -3321,7 +3321,7 @@ wheels = [
 [[package]]
 name = "ragbits"
 version = "0.13.0"
-source = { registry = "https://pypi.org/simple" }
+source = { directory = "ragbits/packages/ragbits" }
 dependencies = [
     { name = "ragbits-cli" },
     { name = "ragbits-conversations" },
@@ -3330,20 +3330,48 @@ dependencies = [
     { name = "ragbits-evaluate" },
     { name = "ragbits-guardrails" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/1b/65/947a25be5a2ab7ff7d27a4582f6564a6ef69ca5c7ee60cbe6e9e5b23b698/ragbits-0.13.0.tar.gz", hash = "sha256:07b695f6defd06e22e0b52fd2eea351a388a91e34ad773c006e1d90aadd96682", size = 7070 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/a9/9a/1207a5aa832c1963c595c81273eb8558f60b29c122ddd23324879645023b/ragbits-0.13.0-py3-none-any.whl", hash = "sha256:72c6b6bc1bda3fc5be5713704bb99b39e4b21452f4b641acc4bc3016d0c85e24", size = 3981 },
-]
 
 [package.optional-dependencies]
 qdrant = [
     { name = "qdrant-client" },
 ]
 
+[package.metadata]
+requires-dist = [
+    { name = "asyncpg", marker = "extra == 'pgvector'", specifier = ">=0.30.0,<1.0.0" },
+    { name = "azure-core", marker = "extra == 'azure'", specifier = ">=1.32.0,<2.0.0" },
+    { name = "azure-identity", marker = "extra == 'azure'", specifier = ">=1.19.0,<2.0.0" },
+    { name = "azure-storage-blob", marker = "extra == 'azure'", specifier = ">=12.24.1,<13.0.0" },
+    { name = "boto3", marker = "extra == 's3'", specifier = ">=1.35.42,<2.0.0" },
+    { name = "chromadb", marker = "extra == 'chroma'", specifier = ">=0.6.3,<1.0.0" },
+    { name = "continuous-eval", marker = "extra == 'relari'", specifier = ">=0.3.12,<1.0.0" },
+    { name = "datasets", marker = "extra == 'huggingface'", specifier = ">=3.0.1,<4.0.0" },
+    { name = "fastembed", marker = "extra == 'fastembed'", specifier = ">=0.4.2,<1.0.0" },
+    { name = "fastembed-gpu", marker = "extra == 'fastembed-gpu'", specifier = ">=0.4.2,<1.0.0" },
+    { name = "gcloud-aio-storage", marker = "extra == 'gcs'", specifier = ">=9.3.0,<10.0.0" },
+    { name = "gradio", marker = "extra == 'lab'", specifier = "~=4.44.0,<5.0.0" },
+    { name = "numpy", marker = "extra == 'local'", specifier = ">=1.26.0,<2.0.0" },
+    { name = "openai", marker = "extra == 'openai'", specifier = ">=1.57.3,<2.0.0" },
+    { name = "opentelemetry-api", marker = "extra == 'otel'", specifier = ">=1.27.0,<2.0.0" },
+    { name = "pyyaml", marker = "extra == 'promptfoo'", specifier = ">=6.0.2,<7.0.0" },
+    { name = "qdrant-client", marker = "extra == 'qdrant'", specifier = ">=1.12.1,<2.0.0" },
+    { name = "ragbits-cli", specifier = "==0.13.0" },
+    { name = "ragbits-conversations", specifier = "==0.13.0" },
+    { name = "ragbits-core", specifier = "==0.13.0" },
+    { name = "ragbits-document-search", specifier = "==0.13.0" },
+    { name = "ragbits-evaluate", specifier = "==0.13.0" },
+    { name = "ragbits-guardrails", specifier = "==0.13.0" },
+    { name = "ray", marker = "extra == 'distributed'", specifier = ">=2.39.0" },
+    { name = "ray", extras = ["data"], marker = "extra == 'ray'", specifier = ">=2.43.0,<3.0.0" },
+    { name = "torch", marker = "extra == 'local'", specifier = ">=2.2.1,<3.0.0" },
+    { name = "transformers", marker = "extra == 'local'", specifier = ">=4.44.2,<5.0.0" },
+]
+provides-extras = ["chroma", "huggingface", "s3", "gcs", "azure", "lab", "local", "openai", "otel", "promptfoo", "qdrant", "relari", "distributed", "fastembed", "fastembed-gpu", "pgvector", "ray"]
+
 [[package]]
 name = "ragbits-api"
 version = "0.8.0"
-source = { directory = "../ragbits/packages/ragbits-api" }
+source = { directory = "ragbits/packages/ragbits-api" }
 
 [package.metadata]
 
