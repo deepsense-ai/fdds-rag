@@ -17,5 +17,10 @@ class MyChat(ChatInterface):
         history: list[Message] | None = None,
         context: dict | None = None,
     ) -> AsyncGenerator[ChatResponse, None]:
-        async for chunk in inference([*history, {"role": "user", "content": message}]):
+        async for chunk in inference(
+            [
+                *[{"role": el.role.value, "content": el.content} for el in history],
+                {"role": "user", "content": message},
+            ]
+        ):
             yield self.create_text_response(chunk)

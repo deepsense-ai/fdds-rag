@@ -6,12 +6,14 @@ requires-python = ">=3.11"
 dependencies = [
     "pre-commit>=4.1.0",
     "pydantic-settings>=2.8.1",
-    "ragbits[qdrant]>=0.10.2",
+#    "ragbits[qdrant]>=0.10.2",
     "ragbits-evaluate[relari]>=0.10.2",
     "unstructured[pdf]>=0.17.2",
     "fastapi[standard]>=0.115.11",
     "scrapy>=2.12.0",
+    "ragbits[qdrant]",
     "ragbits-api",
+
 ]
 [build-system]
 requires = ["hatchling"]
@@ -24,4 +26,5 @@ allow-direct-references = true
 packages = ["src/fdds"]
 
 [tool.uv.sources]
-ragbits-api = { path = "./ragbits/packages/ragbits-api" }
+ragbits-api = { path = "ragbits/packages/ragbits-api" }
+ragbits = { path = "ragbits/packages/ragbits" }
