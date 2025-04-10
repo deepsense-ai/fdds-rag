@@ -1,9 +1,10 @@
 import asyncio
+import logging
 import sys
 
 from pydantic import BaseModel
 from ragbits.core.embeddings.litellm import LiteLLMEmbedder
-from ragbits.core.llms.litellm import LiteLLM
+from ragbits.core.llms.litellm import LiteLLM, LiteLLMOptions
 from ragbits.core.prompt import ChatFormat, Prompt
 from ragbits.core.vector_stores.qdrant import QdrantVectorStore
 from ragbits.document_search import DocumentSearch, SearchConfig
@@ -13,6 +14,9 @@ from typing import AsyncGenerator
 from qdrant_client import AsyncQdrantClient
 
 from fdds import config
+
+logger = logging.getLogger(__name__)
+options = LiteLLMOptions(max_tokens=500)
 
 
 class QueryWithContext(BaseModel):
@@ -155,10 +159,17 @@ async def inference(query_with_history: ChatFormat) -> AsyncGenerator[str, None]
             Compresses the conversation input (history + query)
             before appending it to the context.
     """
-    llm = LiteLLM(model_name=config.MODEL_NAME, api_key=config.OPENAI_API_KEY)
+    llm = LiteLLM(
+        model_name=config.MODEL_NAME,
+        api_key=config.OPENAI_API_KEY,
+        default_options=options,
+    )
 
     compressor = StandaloneMessageCompressor(llm=llm)
     query = await compressor.compress(query_with_history)
+    logger.info(
+        f"Query: {query_with_history[-1]['content']};\nCompressed query: {query}"
+    )
 
     context, sources = await get_contexts(query, top_k=config.TOP_K)
     stream = llm.generate_streaming(
