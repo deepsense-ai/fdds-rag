@@ -207,7 +207,7 @@ async def inference(query_with_history: ChatFormat) -> AsyncGenerator[str, None]
     logger.info(
         f"Query: {query_with_history[-1]['content']} -- "
         f"Compressed query: {query} -- "
-        f"With history: {len(query_with_history) == 1}"
+        f"Without history: {len(query_with_history) == 1}"
     )
 
     context, sources = await get_contexts(query, top_k=config.TOP_K)
