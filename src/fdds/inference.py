@@ -3,20 +3,24 @@ import logging
 import sys
 
 from pydantic import BaseModel
+from ragbits.conversations.history.compressors.llm import (
+    StandaloneMessageCompressor,
+    LastMessageAndHistory,
+)
 from ragbits.core.embeddings.litellm import LiteLLMEmbedder
 from ragbits.core.llms.litellm import LiteLLM, LiteLLMOptions
 from ragbits.core.prompt import ChatFormat, Prompt
 from ragbits.core.vector_stores.qdrant import QdrantVectorStore
 from ragbits.document_search import DocumentSearch, SearchConfig
 from ragbits.document_search.documents.element import Element
-from ragbits.conversations.history.compressors.llm import StandaloneMessageCompressor
+
 from typing import AsyncGenerator
 from qdrant_client import AsyncQdrantClient
 
 from fdds import config
 
 logger = logging.getLogger(__name__)
-options = LiteLLMOptions(max_tokens=500)
+options = LiteLLMOptions(max_tokens=config.MAX_NEW_TOKENS)
 
 
 class QueryWithContext(BaseModel):
@@ -73,6 +77,36 @@ class RAGPrompt(Prompt[QueryWithContext]):
         {{ item }}
     {% endfor %}
     """
+
+
+class CompressorPrompt(Prompt[LastMessageAndHistory, str]):
+    """
+    A prompt for recontextualizing the last message in the history.
+    """
+
+    system_prompt = """
+        Your task is to rewrite the latest user message so that
+        it is fully self-contained. You are given the most recent
+        user message and the previous conversation history.
+        If the new message refers to previous messages
+        (e.g., uses pronouns like "he", "it", or says "as I mentioned"),
+        you must resolve those references using the history.
+
+        Return ONLY the rephrased version of the last message.
+
+        Do NOT answer the question. Do NOT include the history.
+        Do NOT invent new information or change the user's intent.
+        """
+
+    user_prompt = """
+        Message:
+        {{ last_message }}
+
+        History:
+        {% for message in history %}
+        - {{ message }}
+        {% endfor %}
+        """
 
 
 def prepare_context(context: Element) -> str:
@@ -165,10 +199,10 @@ async def inference(query_with_history: ChatFormat) -> AsyncGenerator[str, None]
         default_options=options,
     )
 
-    compressor = StandaloneMessageCompressor(llm=llm)
+    compressor = StandaloneMessageCompressor(llm=llm, prompt=CompressorPrompt)
     query = await compressor.compress(query_with_history)
     logger.info(
-        f"Query: {query_with_history[-1]['content']};\nCompressed query: {query}"
+        f"Query: {query_with_history[-1]['content']}; Compressed query: {query}"
     )
 
     context, sources = await get_contexts(query, top_k=config.TOP_K)

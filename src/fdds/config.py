@@ -18,6 +18,7 @@ class Config(BaseSettings):
     # MODELS
     EMBEDDING_MODEL: str = "text-embedding-3-small"
     MODEL_NAME: str = "gpt-4o-mini"
+    MAX_NEW_TOKENS: PositiveInt = 250
 
     # FAST-API
     API_URL: str = "http://localhost:8000"
@@ -39,7 +40,6 @@ class Config(BaseSettings):
 
     # RETRIEVE PARAMETERS
     TOP_K: PositiveInt = 5
-    TOP_N: PositiveInt = 5
 
     class Config:
         env_file = Path(__file__).parent.parent.parent / ".env"
