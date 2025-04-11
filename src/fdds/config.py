@@ -1,3 +1,5 @@
+import logging
+
 from pathlib import Path
 from pydantic import PositiveInt
 from pydantic_settings import BaseSettings
@@ -25,6 +27,7 @@ class Config(BaseSettings):
 
     # DATA
     QDRANT_URL: str = "http://qdrant:6333"
+    QDRANT_PORT: int = 6333
     QDRANT_INGEST_URL: str = "http://localhost:6333"
     COLLECTION_NAME: str = "fdds"
     DOCUMENTS_PATH: Path = (
@@ -40,6 +43,9 @@ class Config(BaseSettings):
 
     # RETRIEVE PARAMETERS
     TOP_K: PositiveInt = 5
+
+    # LOGS
+    logging.getLogger("LiteLLM").setLevel(logging.WARNING)
 
     class Config:
         env_file = Path(__file__).parent.parent.parent / ".env"
