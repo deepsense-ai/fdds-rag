@@ -153,7 +153,7 @@ async def get_contexts(question: str, top_k: int) -> tuple[list[str], set[str]]:
         url=config.QDRANT_URL,
         port=config.QDRANT_PORT,
         api_key=config.QDRANT_API_KEY,
-        check_version=False,
+        check_compatibility=False,
     )
     vector_store = QdrantVectorStore(
         client=qdrant_client,
