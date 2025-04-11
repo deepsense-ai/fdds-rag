@@ -7,4 +7,4 @@ COPY . /code
 WORKDIR /code
 RUN uv sync
 
-CMD ["/code/.venv/bin/ragbits", "api", "run", "--chat-path", "chat:MyChat", "--host", "localhost"]
+CMD ["/code/.venv/bin/ragbits", "api", "run", "--chat-path", "chat:MyChat", "--host", "0.0.0.0"]
