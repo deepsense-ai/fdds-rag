@@ -205,7 +205,9 @@ async def inference(query_with_history: ChatFormat) -> AsyncGenerator[str, None]
     compressor = StandaloneMessageCompressor(llm=llm, prompt=CompressorPrompt)
     query = await compressor.compress(query_with_history)
     logger.info(
-        f"Query: {query_with_history[-1]['content']}; Compressed query: {query}"
+        f"Query: {query_with_history[-1]['content']} -- "
+        f"Compressed query: {query} -- "
+        f"With history: {len(query_with_history) == 1}"
     )
 
     context, sources = await get_contexts(query, top_k=config.TOP_K)
