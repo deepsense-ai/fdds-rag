@@ -2,11 +2,18 @@ import asyncio
 import logging
 import sys
 
+from opentelemetry import trace
+from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
+from opentelemetry.sdk.resources import SERVICE_NAME, Resource
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from pydantic import BaseModel
 from ragbits.conversations.history.compressors.llm import (
     StandaloneMessageCompressor,
     LastMessageAndHistory,
 )
+from ragbits.core import audit
+from ragbits.core.audit import traceable
 from ragbits.core.embeddings.litellm import LiteLLMEmbedder
 from ragbits.core.llms.litellm import LiteLLM, LiteLLMOptions
 from ragbits.core.prompt import ChatFormat, Prompt
@@ -19,6 +26,13 @@ from qdrant_client import AsyncQdrantClient
 
 from fdds import config
 
+provider = TracerProvider(resource=Resource({SERVICE_NAME: "FDDS-RAG-INFERENCE"}))
+provider.add_span_processor(
+    BatchSpanProcessor(OTLPSpanExporter("http://localhost:4317", insecure=True))
+)
+trace.set_tracer_provider(provider)
+
+audit.set_trace_handlers("otel")
 logger = logging.getLogger(__name__)
 options = LiteLLMOptions(max_tokens=config.MAX_NEW_TOKENS)
 
@@ -171,6 +185,7 @@ async def get_contexts(question: str, top_k: int) -> tuple[list[str], set[str]]:
     return texts, sources
 
 
+@traceable
 async def inference(query_with_history: ChatFormat) -> AsyncGenerator[str, None]:
     """
     Generate an AI-powered response to a query using retrieval-augmented generation.

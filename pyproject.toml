@@ -6,14 +6,15 @@ requires-python = ">=3.11"
 dependencies = [
     "pre-commit>=4.1.0",
     "pydantic-settings>=2.8.1",
-#    "ragbits[qdrant]>=0.10.2",
+    #    "ragbits[qdrant]>=0.10.2",
     "ragbits-evaluate[relari]>=0.10.2",
     "unstructured[pdf]>=0.17.2",
     "fastapi[standard]>=0.115.11",
     "scrapy>=2.12.0",
     "ragbits[qdrant]",
     "ragbits-api",
-
+    "opentelemetry-sdk>=1.32.0",
+    "opentelemetry-exporter-otlp>=1.32.0",
 ]
 [build-system]
 requires = ["hatchling"]
