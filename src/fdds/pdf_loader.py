@@ -1,45 +1,19 @@
 import asyncio
 import argparse
-from collections.abc import Sequence
 
 from qdrant_client import AsyncQdrantClient
 from ragbits.core.embeddings.litellm import LiteLLMEmbedder
 from ragbits.core.vector_stores.qdrant import QdrantVectorStore
 from ragbits.document_search import DocumentSearch
-from ragbits.document_search.documents.sources import LocalFileSource, WebSource, Source
-from ragbits.document_search.documents.element import IntermediateImageElement
+from ragbits.document_search.documents.sources import WebSource
+from ragbits.document_search.ingestion.enrichers import ElementEnricherRouter
+from ragbits.document_search.documents.element import ImageElement
 
 from fdds import config
 from fdds.handlers import NoImageIntermediateHandler
 
 
-async def ingest_documents(
-    documents: Sequence["Source"], document_search: DocumentSearch
-) -> None:
-    """
-    Ingests a sequence of local file source documents into a document search system.
-
-    This function takes a list of local file sources and asynchronously sends
-    them to the specified document search engine (e.g., Qdrant) for ingestion.
-    It raises an error if no documents are provided.
-
-    Args:
-        documents (Sequence["LocalFileSource"]):
-            A sequence of local file sources to be ingested.
-        document_search (DocumentSearch):
-            An instance of the document search system that handles ingestion.
-
-    Raises:
-        ValueError: If the documents list is empty.
-
-
-    """
-    if not documents:
-        raise ValueError("No documents to ingest.")
-    await document_search.ingest(documents)
-
-
-async def ingest_pdf_documents(source_type: str) -> None:
+async def ingest_pdf_documents(documents_path: str) -> None:
     """
     Ingest PDF documents from a local source into a vector store for searching.
 
@@ -55,9 +29,8 @@ async def ingest_pdf_documents(source_type: str) -> None:
     5. If documents are found, it asynchronously ingests them into the vector store.
 
     Args:
-        source_type (str):
-            The source type, either 'pdf' for directory of PDF files or
-            'txt' for a text file with URLs.
+        documents_path (str):
+            Path to a .txt file containing URLs of PDF documents to process.
 
     Raises:
         ValueError: If no documents are found at the specified path.
@@ -67,64 +40,58 @@ async def ingest_pdf_documents(source_type: str) -> None:
 
     """
     embedder = LiteLLMEmbedder(
-        model=config.EMBEDDING_MODEL,
+        model_name=config.EMBEDDING_MODEL,
     )
     qdrant_client = AsyncQdrantClient(
-        url=config.QDRANT_INGEST_URL, api_key=config.QDRANT_API_KEY
+        url=config.QDRANT_INGEST_URL,
+        port=config.QDRANT_PORT,
+        api_key=config.QDRANT_API_KEY,
     )
     vector_store = QdrantVectorStore(
         client=qdrant_client,
         index_name=config.COLLECTION_NAME,
         embedder=embedder,
     )
-
+    enricher_router = ElementEnricherRouter(
+        {ImageElement: NoImageIntermediateHandler()}
+    )
     document_search = DocumentSearch(
         vector_store=vector_store,
-        enricher_router={IntermediateImageElement: NoImageIntermediateHandler()},
+        enricher_router=enricher_router,
     )
 
-    if source_type == "txt":
-        with open(config.DOCUMENTS_PATH, "r") as f:
-            urls = f.read().splitlines()
-        documents = []
-        for url in urls:
-            documents.extend(await WebSource.list_sources(url))
+    with open(documents_path, "r") as f:
+        urls = f.read().splitlines()
+    documents = []
+    for url in urls:
+        documents.extend(await WebSource.list_sources(url))
 
-    elif source_type == "pdf":
-        documents = LocalFileSource.list_sources(
-            config.DOCUMENTS_PATH, file_pattern="*.pdf"
-        )
+    if len(documents):
+        print(f"[Ingesting {len(documents)} documents]")
+        await document_search.ingest(documents)
     else:
-        raise ValueError("Invalid source_type. Must be 'pdf' or 'txt'.")
-
-    if len(documents) == 0:
-        raise ValueError("No documents found")
-    else:
-        print(f"Ingesting {len(documents)} documents...")
-    await ingest_documents(documents, document_search)
+        raise ValueError("No documents to ingest.")
 
 
 def main():
     """
-    Parses the command-line arguments to determine the source type ('txt' or 'pdf')
-    and calls the appropriate ingestion function.
+    Parses the command-line argument to get the path to a .txt file
+    containing URLs of PDF documents, and triggers the ingestion process.
 
-    The command-line argument `-s` or `--source_type` specifies the type of document
-    to ingest. The function then runs the ingestion process asynchronously.
+    The `-p` or `--pdf-list` argument must point to a text file where each line
+    is a URL to a PDF document to be processed.
 
     """
-    parser = argparse.ArgumentParser(description="Ingest documents (PDF or TXT).")
+    parser = argparse.ArgumentParser(description="Ingest documents.")
     parser.add_argument(
-        "-s",
-        "--source_type",
-        choices=["txt", "pdf"],
+        "-p",
+        "--pdf-list",
         required=True,
-        help="Specify the source type (either 'txt' or 'pdf')",
+        help="Path to a .txt file with URLs of PDF documents to process.",
     )
-
     args = parser.parse_args()
 
-    asyncio.run(ingest_pdf_documents(args.source_type))
+    asyncio.run(ingest_pdf_documents(args.pdf_list))
 
 
 if __name__ == "__main__":

@@ -28,11 +28,8 @@ class Config(BaseSettings):
     # DATA
     QDRANT_URL: str = "http://qdrant"
     QDRANT_PORT: int = 6333
-    QDRANT_INGEST_URL: str = "http://localhost:6333"
+    QDRANT_INGEST_URL: str = "http://56.228.7.65"
     COLLECTION_NAME: str = "fdds"
-    DOCUMENTS_PATH: Path = (
-        Path(__file__).parent.parent.parent / "data" / "pdfs" / "pdfs.txt"
-    )
 
     EVAL_DATASET: Path = (
         Path(__file__).parent.parent.parent / "data" / "eval_dataset.json"

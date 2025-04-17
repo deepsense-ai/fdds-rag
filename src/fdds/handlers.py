@@ -1,10 +1,11 @@
-from ragbits.document_search.documents.element import Element, IntermediateElement
-from ragbits.document_search.ingestion.intermediate_handlers.base import (
-    BaseIntermediateHandler,
+from ragbits.document_search.documents.element import ImageElement
+
+from ragbits.document_search.ingestion.enrichers import (
+    ImageElementEnricher,
 )
 
 
-class NoImageIntermediateHandler(BaseIntermediateHandler):
+class NoImageIntermediateHandler(ImageElementEnricher):
     """
     A handler for intermediate image elements that prevents their ingestion
     into the vector store by always returning an empty list.
@@ -12,18 +13,18 @@ class NoImageIntermediateHandler(BaseIntermediateHandler):
     Inherits from BaseIntermediateHandler.
     """
 
-    async def process(
-        self, intermediate_elements: list[IntermediateElement]
-    ) -> list[Element]:
+    async def enrich(self, elements: list[ImageElement]) -> list[ImageElement]:
         """
-        Processes a list of intermediate elements.
+        Skips processing of image elements, as they are excluded
+        from storage in Qdrant.
 
         Args:
-            intermediate_elements (list[IntermediateElement]):
-                The list of intermediate elements to process.
+            elements (list[ImageElement]):
+                The list of image elements to process.
 
         Returns:
-            list[Element]: An empty list, indicating that image elements are not
-            to be ingested into the vector store.
+            list[ImageElement]:
+                An empty list, as image elements are intentionally
+                excluded from being stored in Qdrant.
         """
         return []
