@@ -20,13 +20,13 @@ class Config(BaseSettings):
     # MODELS
     EMBEDDING_MODEL: str = "text-embedding-3-small"
     MODEL_NAME: str = "gpt-4o-mini"
-    MAX_NEW_TOKENS: PositiveInt = 250
+    MAX_NEW_TOKENS: PositiveInt = 300
 
-    # FAST-API
+    # API
     API_URL: str = "http://localhost:8000"
 
     # DATA
-    QDRANT_URL: str = "http://qdrant:6333"
+    QDRANT_URL: str = "http://qdrant"
     QDRANT_PORT: int = 6333
     QDRANT_INGEST_URL: str = "http://localhost:6333"
     COLLECTION_NAME: str = "fdds"
@@ -43,8 +43,10 @@ class Config(BaseSettings):
 
     # RETRIEVE PARAMETERS
     TOP_K: PositiveInt = 5
+    TOP_N: PositiveInt = 5
 
-    # LOGS
+    # LOGS AND MONITORING
+    JAEGER_URL: str = "http://jaeger:4317"
     logging.getLogger("LiteLLM").setLevel(logging.WARNING)
 
     class Config:

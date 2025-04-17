@@ -1,19 +1,13 @@
 import asyncio
 import logging
 import sys
+from fdds.reranker import LLMReranker
 
-from opentelemetry import trace
-from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
-from opentelemetry.sdk.resources import SERVICE_NAME, Resource
-from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from pydantic import BaseModel
 from ragbits.conversations.history.compressors.llm import (
     StandaloneMessageCompressor,
     LastMessageAndHistory,
 )
-from ragbits.core import audit
-from ragbits.core.audit import traceable
 from ragbits.core.embeddings.litellm import LiteLLMEmbedder
 from ragbits.core.llms.litellm import LiteLLM, LiteLLMOptions
 from ragbits.core.prompt import ChatFormat, Prompt
@@ -26,13 +20,6 @@ from qdrant_client import AsyncQdrantClient
 
 from fdds import config
 
-provider = TracerProvider(resource=Resource({SERVICE_NAME: "FDDS-RAG-INFERENCE"}))
-provider.add_span_processor(
-    BatchSpanProcessor(OTLPSpanExporter("http://localhost:4317", insecure=True))
-)
-trace.set_tracer_provider(provider)
-
-audit.set_trace_handlers("otel")
 logger = logging.getLogger(__name__)
 options = LiteLLMOptions(max_tokens=config.MAX_NEW_TOKENS)
 
@@ -132,7 +119,9 @@ def prepare_context(context: Element) -> str:
     return text
 
 
-async def get_contexts(question: str, top_k: int) -> tuple[list[str], set[str]]:
+async def get_contexts(
+    question: str, top_k: int, top_n: int
+) -> tuple[list[str], set[str]]:
     """
     Retrieve the most relevant context documents for a given question
     using a vector store.
@@ -146,6 +135,10 @@ async def get_contexts(question: str, top_k: int) -> tuple[list[str], set[str]]:
             The question to search for relevant contexts.
         top_k (int):
             The number of top relevant contexts to retrieve from the vector store.
+        top_n (int):
+            The maximum number of reranked contexts to return
+            after applying the reranker. The actual number returned may be fewer,
+            depending on relevance.
 
     Returns:
         tuple[list[str], set[str]]: A tuple containing two elements:
@@ -163,6 +156,10 @@ async def get_contexts(question: str, top_k: int) -> tuple[list[str], set[str]]:
     embedder = LiteLLMEmbedder(
         model_name=config.EMBEDDING_MODEL,
     )
+    reranker = LLMReranker(
+        model_name=config.MODEL_NAME,
+    )
+
     qdrant_client = AsyncQdrantClient(
         url=config.QDRANT_URL,
         port=config.QDRANT_PORT,
@@ -174,10 +171,13 @@ async def get_contexts(question: str, top_k: int) -> tuple[list[str], set[str]]:
         index_name=config.COLLECTION_NAME,
         embedder=embedder,
     )
-    document_search = DocumentSearch(vector_store=vector_store)
+    document_search = DocumentSearch(vector_store=vector_store, reranker=reranker)
     contexts = await document_search.search(
         question,
-        SearchConfig(vector_store_kwargs={"k": top_k}),
+        SearchConfig(
+            vector_store_kwargs={"k": top_k},
+            reranker_kwargs={"top_n": top_n},
+        ),
     )
 
     texts = [prepare_context(context) for context in contexts]
@@ -185,32 +185,7 @@ async def get_contexts(question: str, top_k: int) -> tuple[list[str], set[str]]:
     return texts, sources
 
 
-@traceable
 async def inference(query_with_history: ChatFormat) -> AsyncGenerator[str, None]:
-    """
-    Generate an AI-powered response to a query using retrieval-augmented generation.
-
-    This function retrieves relevant contexts for the input query, optionally compresses
-    and includes the conversation history, constructs a prompt using the `RAGPrompt`
-    class, and generates a response using a language model. The response is streamed in
-    real-time in chunks.
-
-    Args:
-        query_with_history (ChatFormat):
-            The combined conversation history and current query
-            to be included in the response generation.
-
-    Yields:
-        str: Chunks of the generated response.
-
-    Dependencies:
-        - LiteLLM: Handles response generation from the language model.
-        - get_contexts: Fetches relevant contexts for the query.
-        - RAGPrompt: Creates a structured prompt with the query and contexts.
-        - StandaloneMessageCompressor:
-            Compresses the conversation input (history + query)
-            before appending it to the context.
-    """
     llm = LiteLLM(
         model_name=config.MODEL_NAME,
         api_key=config.OPENAI_API_KEY,
@@ -225,17 +200,18 @@ async def inference(query_with_history: ChatFormat) -> AsyncGenerator[str, None]
         f"Without history: {len(query_with_history) == 1}"
     )
 
-    context, sources = await get_contexts(query, top_k=config.TOP_K)
+    context, sources = await get_contexts(query, top_k=config.TOP_K, top_n=config.TOP_N)
     stream = llm.generate_streaming(
         prompt=RAGPrompt(QueryWithContext(query=query, context=context)),
     )
     async for chunk in stream:
         yield chunk
 
-    sources_str = "\n\nPowiązane materiały: \n" + "\n".join(
-        [f"- {source}" for source in sources]
-    )
-    yield sources_str
+    if sources:
+        sources_str = "\n\nPowiązane materiały: \n" + "\n".join(
+            [f"- {source}" for source in sources]
+        )
+        yield sources_str
 
 
 def parse_query() -> ChatFormat:
