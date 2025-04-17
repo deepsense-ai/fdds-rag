@@ -86,17 +86,23 @@ class CompressorPrompt(Prompt[LastMessageAndHistory, str]):
     """
 
     system_prompt = """
-        Your task is to rewrite the latest user message so that
-        it is fully self-contained. You are given the most recent
-        user message and the previous conversation history.
-        If the new message refers to previous messages
-        (e.g., uses pronouns like "he", "it", or says "as I mentioned"),
+        Your task is to rewrite the most recent user message so that
+        it is fully self-contained and understandable on its own.
+
+        You are provided with:
+        - The most recent user message ("Message").
+        - A list of previous messages ("History"), ordered chronologically.
+
+        If the latest message contains references to previous messages
+        (e.g., using pronouns like "he", "it", or phrases like "as I said earlier"),
         you must resolve those references using the history.
 
-        Return ONLY the rephrased version of the last message.
+        Return ONLY the rewritten, self-contained version of the latest message.
 
-        Do NOT answer the question. Do NOT include the history.
-        Do NOT invent new information or change the user's intent.
+        Do NOT include the message history in your output.
+        Do NOT answer the message.
+        Do NOT change the meaning or add new information.
+
         """
 
     user_prompt = """

@@ -20,7 +20,7 @@ class Config(BaseSettings):
     # MODELS
     EMBEDDING_MODEL: str = "text-embedding-3-small"
     MODEL_NAME: str = "gpt-4o-mini"
-    MAX_NEW_TOKENS: PositiveInt = 300
+    MAX_NEW_TOKENS: PositiveInt = 500
 
     # API
     API_URL: str = "http://localhost:8000"
