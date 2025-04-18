@@ -28,16 +28,16 @@
 │   └── chat.py
 ```
 ## Key Components
-- `data/pdfs`: directory for storing your PDF files.
-- `data/qdrant`: local volume for Qdrant's data persistence.
-- `docker-compose.yml` configures the Qdrant service and API (for the API see also `Dockerfile`).
+- `docker-compose.yml` Defines and manages services like Qdrant (vector DB), the API backend, and Jaeger (for monitoring and tracing).
+- `Dockerfile`: Builds the backend API service that serves the RAG-based chatbot.
+- `pyproject.toml` and `uv.lock`: Configuration files for uv and project dependencies.
+- `.pre-commit-config.yaml`: Configuration for pre-commit hooks to ensure code quality.
+- `data/qdrant`: Persistent volume for Qdrant's vector data storage.
 - `src/fdds/inference.py` contains methods to process a query and generate responses based on contextual data using RAG.
-- `src/fdds/pdf_loader.py` loads and processes PDF files from the `data/pdfs` directory into Qdrant.
-- `src/fdds/evaluation.py` Evaluates RAG using a defined pipeline in the `src/fdds/evaluation_pipeline.py` file.
+- `src/fdds/pdf_loader.py` logic for ingesting PDF files from the list of urls into Qdrant.
+- `src/fdds/evaluation.py` Evaluates RAG using a defined pipeline in the `src/fdds/evaluation_pipeline.py` file (requires NEPTUNE_API_KEY).
 - `src/fdds/config.py` holds configuration settings for the project.
-- `src/ui-build`: compiled frontend interface for chatbot interaction.
-- `pyproject.toml` and `uv.lock`: configuration files for uv and project dependencies.
-- `.pre-commit-config.yaml`: configuration for pre-commit hooks to ensure code quality.
+- `src/ui-build`: Precompiled frontend UI assets for the chatbot interface.
 - `src/chat.py`: Contains the core `MyChat` class responsible for managing conversation flow.
 
 ## Prerequisites

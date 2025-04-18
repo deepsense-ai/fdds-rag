@@ -26,7 +26,7 @@ class Config(BaseSettings):
     API_URL: str = "http://localhost:8000"
 
     # DATA
-    QDRANT_URL: str = "http://qdrant"
+    QDRANT_URL: str = "http://56.228.7.65"  # "http://qdrant"
     QDRANT_PORT: int = 6333
     QDRANT_INGEST_URL: str = "http://56.228.7.65"
     COLLECTION_NAME: str = "fdds"

@@ -86,34 +86,35 @@ class CompressorPrompt(Prompt[LastMessageAndHistory, str]):
     """
 
     system_prompt = """
-        Your task is to rewrite the most recent user message so that
-        it is fully self-contained and understandable on its own.
+    Your task is to rewrite the most recent user message so that
+    it is fully self-contained and understandable on its own.
 
-        You are provided with:
-        - The most recent user message ("Message").
-        - A list of previous messages ("History"), ordered chronologically.
+    You are provided with:
+    - The most recent user message ("Message").
+    - A list of previous messages ("History"), ordered from most recent to oldest.
 
-        If the latest message contains references to previous messages
-        (e.g., using pronouns like "he", "it", or phrases like "as I said earlier"),
-        you must resolve those references using the history.
+    If the latest message contains references to previous messages
+    (e.g., using pronouns like "he", "it", or phrases like "as I said earlier"),
+    you must resolve those references using the history.
+    When resolving ambiguous references,
+    always prefer the most recent applicable message.
 
-        Return ONLY the rewritten, self-contained version of the latest message.
+    Return ONLY the rewritten, self-contained version of the latest message.
 
-        Do NOT include the message history in your output.
-        Do NOT answer the message.
-        Do NOT change the meaning or add new information.
-
-        """
+    Do NOT include the message history in your output.
+    Do NOT answer the message.
+    Do NOT change the meaning or add new information.
+    """
 
     user_prompt = """
-        Message:
-        {{ last_message }}
+    Message:
+    {{ last_message }}
 
-        History:
-        {% for message in history %}
-        - {{ message }}
-        {% endfor %}
-        """
+    History:
+    {% for message in history[::-1] %}
+    - {{ message }}
+    {% endfor %}
+    """
 
 
 def prepare_context(context: Element) -> str:
