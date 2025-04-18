@@ -2,6 +2,7 @@ import asyncio
 import argparse
 
 from qdrant_client import AsyncQdrantClient
+from qdrant_client.models import Filter, FieldCondition, MatchValue
 from ragbits.core.embeddings.litellm import LiteLLMEmbedder
 from ragbits.core.vector_stores.qdrant import QdrantVectorStore
 from ragbits.document_search import DocumentSearch
@@ -73,25 +74,62 @@ async def ingest_pdf_documents(documents_path: str) -> None:
         raise ValueError("No documents to ingest.")
 
 
+async def delete_url(qdrant_client, url):
+    filter_condition = Filter(
+        must=[
+            FieldCondition(
+                key="metadata.document_meta.source.url", match=MatchValue(value=url)
+            )
+        ]
+    )
+    try:
+        await qdrant_client.delete(
+            collection_name=config.COLLECTION_NAME, points_selector=filter_condition
+        )
+        print(f"Deleted: {url}")
+    except Exception as e:
+        print(f"Error deleting {url}: {e}")
+
+
+async def delete_pdf_documents(documents_path: str) -> None:
+    with open(documents_path, "r") as f:
+        urls = f.read().splitlines()
+    qdrant_client = AsyncQdrantClient(
+        url=config.QDRANT_INGEST_URL,
+        port=config.QDRANT_PORT,
+        api_key=config.QDRANT_API_KEY,
+    )
+    await asyncio.gather(*(delete_url(qdrant_client, url) for url in urls))
+
+
 def main():
     """
-    Parses the command-line argument to get the path to a .txt file
-    containing URLs of PDF documents, and triggers the ingestion process.
+    CLI tool to ingest or delete PDF documents based on a list of URLs.
 
-    The `-p` or `--pdf-list` argument must point to a text file where each line
-    is a URL to a PDF document to be processed.
-
+    Usage:
+        - To ingest:  python script.py --ingest path/to/file.txt
+        - To delete:  python script.py --delete path/to/file.txt
     """
-    parser = argparse.ArgumentParser(description="Ingest documents.")
-    parser.add_argument(
-        "-p",
-        "--pdf-list",
-        required=True,
-        help="Path to a .txt file with URLs of PDF documents to process.",
+    parser = argparse.ArgumentParser(description="Manage PDF documents.")
+
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument(
+        "--ingest",
+        "-i",
+        help="Path to a .txt file with URLs of PDF documents to ingest.",
     )
+    group.add_argument(
+        "--delete",
+        "-d",
+        help="Path to a .txt file with URLs of PDF documents to delete.",
+    )
+
     args = parser.parse_args()
 
-    asyncio.run(ingest_pdf_documents(args.pdf_list))
+    if args.ingest:
+        asyncio.run(ingest_pdf_documents(args.ingest))
+    elif args.delete:
+        asyncio.run(delete_pdf_documents(args.delete))
 
 
 if __name__ == "__main__":

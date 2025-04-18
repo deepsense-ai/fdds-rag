@@ -20,9 +20,9 @@
 │   │   ├── config.py
 │   │   ├── handlers.py
 │   │   ├── inference.py
-│   │   ├── pdf_loader.py
 │   │   ├── evaluation.py
 │   │   ├── evaluation_pipeline.py
+│   │   ├── manage_pdfs.py
 │   │   └── reranker.py
 │   ├── ui-build/
 │   └── chat.py
@@ -34,7 +34,7 @@
 - `.pre-commit-config.yaml`: Configuration for pre-commit hooks to ensure code quality.
 - `data/qdrant`: Persistent volume for Qdrant's vector data storage.
 - `src/fdds/inference.py` contains methods to process a query and generate responses based on contextual data using RAG.
-- `src/fdds/pdf_loader.py` logic for ingesting PDF files from the list of urls into Qdrant.
+- `src/fdds/manage_pdfs.py` script to ingest and delete PDF files from the list of URLs in Qdrant.
 - `src/fdds/evaluation.py` Evaluates RAG using a defined pipeline in the `src/fdds/evaluation_pipeline.py` file (requires NEPTUNE_API_KEY).
 - `src/fdds/config.py` holds configuration settings for the project.
 - `src/ui-build`: Precompiled frontend UI assets for the chatbot interface.
@@ -91,9 +91,13 @@ This will crawl and extract all PDF file links from the sections specified in th
 The collected links will be saved as: `scripts/fdds_scrapper/pdfs.txt`.
 > **Note:** To customize which sections are scraped, modify the start_urls list in `pdf_spider.py`.
 
-### 7. Ingest PDF Files into Qdrant:
+### 7. Manage PDF Files in Qdrant (Ingest & Delete):
 To load PDF documents into the Qdrant database, prepare a .txt file containing one PDF URL per line (no delimiters or special characters). If you followed the previous step, this file is already generated.
-Run the ingestion script with the path to your link file:
+To ingest the documents, run:
 ```bash
-uv run fdds/src/pdf_loader.py --pdf-list <path_to_txt_file>
+uv run fdds/src/pdf_loader.py --ingest <path_to_txt_file>
+```
+To delete the corresponding documents from Qdrant, use:
+```bash
+uv run fdds/src/pdf_loader.py --delete <path_to_txt_file>
 ```
