@@ -95,9 +95,9 @@ The collected links will be saved as: `scripts/fdds_scrapper/pdfs.txt`.
 To load PDF documents into the Qdrant database, prepare a .txt file containing one PDF URL per line (no delimiters or special characters). If you followed the previous step, this file is already generated.
 To ingest the documents, run:
 ```bash
-uv run fdds/src/pdf_loader.py --ingest <path_to_txt_file>
+uv run fdds/src/manage_pdfs.py --ingest <path_to_txt_file>
 ```
 To delete the corresponding documents from Qdrant, use:
 ```bash
-uv run fdds/src/pdf_loader.py --delete <path_to_txt_file>
+uv run fdds/src/manage_pdfs.py --delete <path_to_txt_file>
 ```
