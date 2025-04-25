@@ -6,7 +6,7 @@ from qdrant_client.models import Filter, FieldCondition, MatchValue
 from ragbits.core.embeddings.litellm import LiteLLMEmbedder
 from ragbits.core.vector_stores.qdrant import QdrantVectorStore
 from ragbits.document_search import DocumentSearch
-from ragbits.document_search.documents.sources import WebSource
+from ragbits.core.sources.web import WebSource
 from ragbits.document_search.ingestion.enrichers import ElementEnricherRouter
 from ragbits.document_search.documents.element import ImageElement
 

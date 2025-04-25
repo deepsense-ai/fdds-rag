@@ -4,7 +4,7 @@ import sys
 from fdds.reranker import LLMReranker
 
 from pydantic import BaseModel
-from ragbits.conversations.history.compressors.llm import (
+from ragbits.chat.history.compressors.llm import (
     StandaloneMessageCompressor,
     LastMessageAndHistory,
 )

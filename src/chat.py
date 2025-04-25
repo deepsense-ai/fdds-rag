@@ -5,8 +5,8 @@ from opentelemetry.sdk.resources import SERVICE_NAME, Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 
-from ragbits.api.interface import ChatInterface
-from ragbits.api.interface.types import (
+from ragbits.chat.interface import ChatInterface
+from ragbits.chat.interface.types import (
     ChatResponse,
     Message,
 )
@@ -38,7 +38,7 @@ class MyChat(ChatInterface):
         async for chunk in inference(
             [
                 *[
-                    {"role": element.role.value, "content": element.content}
+                    {"role": element["role"].value, "content": element["content"]}
                     for element in history
                 ],
                 {"role": "user", "content": message},

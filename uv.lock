@@ -819,7 +819,6 @@ dependencies = [
     { name = "pre-commit" },
     { name = "pydantic-settings" },
     { name = "ragbits", extra = ["qdrant"] },
-    { name = "ragbits-api" },
     { name = "ragbits-evaluate", extra = ["relari"] },
     { name = "scrapy" },
     { name = "unstructured", extra = ["pdf"] },
@@ -832,8 +831,7 @@ requires-dist = [
     { name = "opentelemetry-sdk", specifier = ">=1.32.0" },
     { name = "pre-commit", specifier = ">=4.1.0" },
     { name = "pydantic-settings", specifier = ">=2.8.1" },
-    { name = "ragbits", extras = ["qdrant"], directory = "ragbits/packages/ragbits" },
-    { name = "ragbits-api", directory = "ragbits/packages/ragbits-api" },
+    { name = "ragbits", extras = ["qdrant"], specifier = "==0.14.0" },
     { name = "ragbits-evaluate", extras = ["relari"], specifier = ">=0.10.2" },
     { name = "scrapy", specifier = ">=2.12.0" },
     { name = "unstructured", extras = ["pdf"], specifier = ">=0.17.2" },
@@ -3437,15 +3435,19 @@ wheels = [
 
 [[package]]
 name = "ragbits"
-version = "0.13.0"
-source = { directory = "ragbits/packages/ragbits" }
+version = "0.14.0"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
+    { name = "ragbits-chat" },
     { name = "ragbits-cli" },
-    { name = "ragbits-conversations" },
     { name = "ragbits-core" },
     { name = "ragbits-document-search" },
     { name = "ragbits-evaluate" },
     { name = "ragbits-guardrails" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/e9/f4/29a90d8d175139f7b448c35f757d115c6107a45896bb8395d555b08a5cee/ragbits-0.14.0.tar.gz", hash = "sha256:9255f4c2fd67e14352d96631650adb14957691d1f7964d5cbb46360960c97344", size = 8094 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/18/f0/61e77ee7c1ed8c22931c686c32be6c8f69e633888ce2afdb7b535769d583/ragbits-0.14.0-py3-none-any.whl", hash = "sha256:69e53550af1a280779e3fcca66adbdbcb048aba621946a88b1aee7d688d87359", size = 3991 },
 ]
 
 [package.optional-dependencies]
@@ -3453,156 +3455,68 @@ qdrant = [
     { name = "qdrant-client" },
 ]
 
-[package.metadata]
-requires-dist = [
-    { name = "asyncpg", marker = "extra == 'pgvector'", specifier = ">=0.30.0,<1.0.0" },
-    { name = "azure-core", marker = "extra == 'azure'", specifier = ">=1.32.0,<2.0.0" },
-    { name = "azure-identity", marker = "extra == 'azure'", specifier = ">=1.19.0,<2.0.0" },
-    { name = "azure-storage-blob", marker = "extra == 'azure'", specifier = ">=12.24.1,<13.0.0" },
-    { name = "boto3", marker = "extra == 's3'", specifier = ">=1.35.42,<2.0.0" },
-    { name = "chromadb", marker = "extra == 'chroma'", specifier = ">=0.6.3,<1.0.0" },
-    { name = "continuous-eval", marker = "extra == 'relari'", specifier = ">=0.3.12,<1.0.0" },
-    { name = "datasets", marker = "extra == 'hf'", specifier = ">=3.0.1,<4.0.0" },
-    { name = "fastembed", marker = "extra == 'fastembed'", specifier = ">=0.4.2,<1.0.0" },
-    { name = "fastembed-gpu", marker = "extra == 'fastembed-gpu'", specifier = ">=0.4.2,<1.0.0" },
-    { name = "gcloud-aio-storage", marker = "extra == 'gcs'", specifier = ">=9.3.0,<10.0.0" },
-    { name = "gradio", marker = "extra == 'lab'", specifier = "~=4.44.0,<5.0.0" },
-    { name = "numpy", marker = "extra == 'local'", specifier = ">=1.26.0,<2.0.0" },
-    { name = "openai", marker = "extra == 'openai'", specifier = ">=1.57.3,<2.0.0" },
-    { name = "opentelemetry-api", marker = "extra == 'otel'", specifier = ">=1.27.0,<2.0.0" },
-    { name = "pyyaml", marker = "extra == 'promptfoo'", specifier = ">=6.0.2,<7.0.0" },
-    { name = "qdrant-client", marker = "extra == 'qdrant'", specifier = ">=1.12.1,<2.0.0" },
-    { name = "ragbits-cli", specifier = "==0.13.0" },
-    { name = "ragbits-conversations", specifier = "==0.13.0" },
-    { name = "ragbits-core", specifier = "==0.13.0" },
-    { name = "ragbits-document-search", specifier = "==0.13.0" },
-    { name = "ragbits-evaluate", specifier = "==0.13.0" },
-    { name = "ragbits-guardrails", specifier = "==0.13.0" },
-    { name = "ray", extras = ["data"], marker = "extra == 'ray'", specifier = ">=2.43.0,<3.0.0" },
-    { name = "torch", marker = "extra == 'local'", specifier = ">=2.2.1,<3.0.0" },
-    { name = "transformers", marker = "extra == 'local'", specifier = ">=4.44.2,<5.0.0" },
-]
-provides-extras = ["chroma", "hf", "s3", "gcs", "azure", "lab", "local", "openai", "otel", "promptfoo", "qdrant", "relari", "fastembed", "fastembed-gpu", "pgvector", "ray"]
-
 [[package]]
-name = "ragbits-api"
-version = "0.13.0"
-source = { directory = "ragbits/packages/ragbits-api" }
+name = "ragbits-chat"
+version = "0.14.0"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "fastapi" },
     { name = "ragbits-core" },
 ]
-
-[package.metadata]
-requires-dist = [
-    { name = "fastapi", specifier = ">=0.115.0,<1.0.0" },
-    { name = "ragbits-core", editable = "ragbits/packages/ragbits-core" },
-]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "pip-licenses", specifier = ">=4.0.0,<5.0.0" },
-    { name = "pre-commit", specifier = "~=3.8.0" },
-    { name = "pytest", specifier = "~=8.3.3" },
-    { name = "pytest-asyncio", specifier = "~=0.24.0" },
-    { name = "pytest-cov", specifier = "~=5.0.0" },
+sdist = { url = "https://files.pythonhosted.org/packages/b1/65/3d63973726d3f0fb5a548703289e5ef12aa02b32f37e3b9958fde2e438f7/ragbits_chat-0.14.0.tar.gz", hash = "sha256:307f5d13bd5c518e3f24b985e95b8bd55333ceb39136914a319f57c1911a51c0", size = 347287 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/3e/bc/bed39159472596a813dd6b5ac079d163116ed5339dec432ae12effbfa30f/ragbits_chat-0.14.0-py3-none-any.whl", hash = "sha256:71871e7a42725d3e630fcc7905a210154709d386ee09494bca176adcf4ac5d6d", size = 347965 },
 ]
 
 [[package]]
 name = "ragbits-cli"
-version = "0.13.0"
+version = "0.14.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "ragbits-core" },
     { name = "typer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/75/4a/9903501525da4a989bd5837f12a2c2d9419646f872a79f509470c03ffdee/ragbits_cli-0.13.0.tar.gz", hash = "sha256:e5cdc701d9d7fe7d88cec8f496d8b7d5334bb17e26c906783ff1d5b460e7f4e9", size = 7644 }
+sdist = { url = "https://files.pythonhosted.org/packages/c1/09/b2ad4092a3500849d1eea6c5a293f69e009f032f305263a9f5c36bbffe36/ragbits_cli-0.14.0.tar.gz", hash = "sha256:45992f5329265cc9a20c6c9d84d524b29227acee2f4fabfbe984f06df6d961cd", size = 7777 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/97/bc/f640b71ef3b0ef1d6f8946a9e998e691e11c22ff8b66bc978c4507fac060/ragbits_cli-0.13.0-py3-none-any.whl", hash = "sha256:d93491eef98025be1ca820ab16bfe4824c8787f8db8c4f270dcb97a6e732791a", size = 7061 },
-]
-
-[[package]]
-name = "ragbits-conversations"
-version = "0.13.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "ragbits-core" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/15/11/eb4c64444fdbe612e364e0c13a039e93f293d0fea364fc5bce86749c0eb4/ragbits_conversations-0.13.0.tar.gz", hash = "sha256:21c9e807862a8c1a5e2742d150d81eef9997c9eda7ee723d0463e0e45bf79389", size = 6669 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/a2/56/218349d0572c0674218d191c824955ef774d0f472a0d58cbb319605fecdd/ragbits_conversations-0.13.0-py3-none-any.whl", hash = "sha256:b1ee7bb83b6bc59b90d532f5037334e92c2f7880708897032c1bc4e07462fac8", size = 7453 },
+    { url = "https://files.pythonhosted.org/packages/b9/8d/1c25265e4b300a925dc3fd72417f82dd55bf4ced9f950b3f2651f31151bd/ragbits_cli-0.14.0-py3-none-any.whl", hash = "sha256:fb2b0a5a60e0c2d5e545061689d5128034a6e18641ded5d50728cec729fb8b49", size = 7167 },
 ]
 
 [[package]]
 name = "ragbits-core"
-version = "0.13.0"
-source = { editable = "ragbits/packages/ragbits-core" }
+version = "0.14.0"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiohttp" },
     { name = "jinja2" },
     { name = "litellm" },
     { name = "pydantic" },
+    { name = "standard-imghdr" },
     { name = "tomli" },
     { name = "typer" },
 ]
-
-[package.metadata]
-requires-dist = [
-    { name = "aiohttp", specifier = ">=3.10.8,<4.0.0" },
-    { name = "asyncpg", marker = "extra == 'pgvector'", specifier = ">=0.30.0,<1.0.0" },
-    { name = "azure-core", marker = "extra == 'azure'", specifier = ">=1.32.0,<2.0.0" },
-    { name = "azure-identity", marker = "extra == 'azure'", specifier = ">=1.19.0,<2.0.0" },
-    { name = "azure-storage-blob", marker = "extra == 'azure'", specifier = ">=12.24.1,<13.0.0" },
-    { name = "boto3", marker = "extra == 's3'", specifier = ">=1.35.42,<2.0.0" },
-    { name = "chromadb", marker = "extra == 'chroma'", specifier = ">=0.6.3,<1.0.0" },
-    { name = "datasets", marker = "extra == 'hf'", specifier = ">=3.0.1,<4.0.0" },
-    { name = "fastembed", marker = "extra == 'fastembed'", specifier = ">=0.4.2,<1.0.0" },
-    { name = "fastembed-gpu", marker = "extra == 'fastembed-gpu'", specifier = ">=0.4.2,<1.0.0" },
-    { name = "gcloud-aio-storage", marker = "extra == 'gcs'", specifier = ">=9.3.0,<10.0.0" },
-    { name = "gradio", marker = "extra == 'lab'", specifier = "~=4.44.0,<5.0.0" },
-    { name = "jinja2", specifier = ">=3.1.4,<4.0.0" },
-    { name = "litellm", specifier = ">=1.55.0,<2.0.0" },
-    { name = "numpy", marker = "extra == 'local'", specifier = ">=1.26.0,<2.0.0" },
-    { name = "opentelemetry-api", marker = "extra == 'otel'", specifier = ">=1.27.0,<2.0.0" },
-    { name = "pydantic", specifier = ">=2.9.1,<3.0.0" },
-    { name = "pyyaml", marker = "extra == 'promptfoo'", specifier = ">=6.0.2,<7.0.0" },
-    { name = "qdrant-client", marker = "extra == 'qdrant'", specifier = ">=1.12.1,<2.0.0" },
-    { name = "sentence-transformers", marker = "extra == 'local'", specifier = ">=4.0.2,<5.0.0" },
-    { name = "tomli", specifier = ">=2.0.2,<3.0.0" },
-    { name = "torch", marker = "extra == 'local'", specifier = ">=2.2.1,<3.0.0" },
-    { name = "transformers", marker = "extra == 'local'", specifier = ">=4.44.2,<5.0.0" },
-    { name = "typer", specifier = ">=0.12.5,<1.0.0" },
-]
-provides-extras = ["chroma", "local", "fastembed", "lab", "promptfoo", "otel", "qdrant", "pgvector", "fastembed-gpu", "azure", "gcs", "hf", "s3"]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "pip-licenses", specifier = ">=4.0.0,<5.0.0" },
-    { name = "pre-commit", specifier = "~=3.8.0" },
-    { name = "pytest", specifier = "~=8.3.3" },
-    { name = "pytest-asyncio", specifier = "~=0.24.0" },
-    { name = "pytest-cov", specifier = "~=5.0.0" },
+sdist = { url = "https://files.pythonhosted.org/packages/82/9d/70f9635918d9db97800c20d744e81353e9f5153d7b8c8f0a3461725c0f37/ragbits_core-0.14.0.tar.gz", hash = "sha256:395bcc054a45e9bc7169494ce61254f8f8a2348ab12a5122dec22fa138985ee2", size = 143760 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/58/f7/f9d521212d2b257bc4b70042fd3d7c4aecd2a176a1ae4d3a406a92b2dabd/ragbits_core-0.14.0-py3-none-any.whl", hash = "sha256:301285d74685da2c97127d647de2a3800fd1ad060f336b7568e31a60bb7c3507", size = 90546 },
 ]
 
 [[package]]
 name = "ragbits-document-search"
-version = "0.13.0"
+version = "0.14.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "aiohttp" },
     { name = "ragbits-core" },
     { name = "rerankers" },
     { name = "unstructured" },
     { name = "unstructured-client" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/76/5c/f9719fda4f9b10cd924e9ebcb8b120e6d351c89041db032dab3b314bfb3d/ragbits_document_search-0.13.0.tar.gz", hash = "sha256:f314f6b1249db6b3d15a9fb9b8f531c5923873f7b9486696efd8996ff308b2dd", size = 356015 }
+sdist = { url = "https://files.pythonhosted.org/packages/bf/7e/c2267dff9eb1a4dbef080668872ae40bb9f4d92a25bf856f1854f3ec0d79/ragbits_document_search-0.14.0.tar.gz", hash = "sha256:657fff4ad9563c825405e8377a0416465ebc6a4af274f40db1e7179925d4f802", size = 341535 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/60/1c/e535d0b6ea7daa7133afa063d3ec6b4d9f9ac464733443ea59a31e8dd364/ragbits_document_search-0.13.0-py3-none-any.whl", hash = "sha256:dd0eb809800d8de02ebe3e612cc8acd08b499831d777a977ab5281b9382c817a", size = 55115 },
+    { url = "https://files.pythonhosted.org/packages/df/fc/4a039bab34b7cff7da9365f40979ef51c32b4095f7ddd025a475bfb8e98e/ragbits_document_search-0.14.0-py3-none-any.whl", hash = "sha256:d8fa846212da2dea810cbb7d93cb4b0d6206f1f3ecc3f125bad67ba9210824dc", size = 40432 },
 ]
 
 [[package]]
 name = "ragbits-evaluate"
-version = "0.13.0"
+version = "0.14.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "distilabel" },
@@ -3611,9 +3525,9 @@ dependencies = [
     { name = "optuna" },
     { name = "ragbits-core" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/26/c8/67491163fac095f9f4709293b4161720d33412cb27443570df3bdc7236d8/ragbits_evaluate-0.13.0.tar.gz", hash = "sha256:cd1290240e3d34e53c443df98010994f6039d4c49801d2773e5dba1de0501dd3", size = 16727 }
+sdist = { url = "https://files.pythonhosted.org/packages/77/7c/525599552f93df42b6e555fcc7fc332faa11767b32902a538b13a2eb0cdb/ragbits_evaluate-0.14.0.tar.gz", hash = "sha256:ea8a12e68f7b32cc57a916ce93e495e11785edb802c16b42ab71382841e2085a", size = 16764 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/77/a0/391a633885a437e406da6832dc19e692cf187133cc0f4b890bfb00cb6a17/ragbits_evaluate-0.13.0-py3-none-any.whl", hash = "sha256:992633164f6ecf2e641d260f5b67a00fd688c4bdca7e7797e9b71764309f2e7b", size = 26759 },
+    { url = "https://files.pythonhosted.org/packages/37/a7/955a60ff3e5b016557593d5806b71c87c19bf163c664ba0bb6910f7d66ed/ragbits_evaluate-0.14.0-py3-none-any.whl", hash = "sha256:1466b1133792f440045bc5874e0e82ab23c5ed2fb439851070bb9d01d9a5c18d", size = 26759 },
 ]
 
 [package.optional-dependencies]
@@ -3623,14 +3537,14 @@ relari = [
 
 [[package]]
 name = "ragbits-guardrails"
-version = "0.13.0"
+version = "0.14.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "ragbits-core" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/3f/43/a89bf8c49b6eeaf8cbb50dbc1ab91a78c1389d632998cff3f6ba74f07917/ragbits_guardrails-0.13.0.tar.gz", hash = "sha256:e0a55fc8729be8260567d8b56a70fd5c9bf189e7ce30e94b7fedff8b06d35ba2", size = 3865 }
+sdist = { url = "https://files.pythonhosted.org/packages/72/3b/a479bef826da305d6441cdb0a6c06e08292db2920c9a492e509252a38ed3/ragbits_guardrails-0.14.0.tar.gz", hash = "sha256:3b7598b90bbf855796fa912a2899b80cd16c5fbc459ae45ee79673fa8622e1c6", size = 3871 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/72/a8/93ee5e1d1abc7da869f95cb6c1035f53f73d59982ab7ebb8e70ab83ca623/ragbits_guardrails-0.13.0-py3-none-any.whl", hash = "sha256:1be392d344ada184b44d2abc5bd7024370959da0c0b5937e7f9a008badbb728b", size = 3654 },
+    { url = "https://files.pythonhosted.org/packages/02/71/0143bf75451a2c05df4b4887191951546a3befd62f2fe193202e6250b5a4/ragbits_guardrails-0.14.0-py3-none-any.whl", hash = "sha256:7abe4994f16130b65efec8b8362a552ec27e0c189d9cf9fd75de9fd186925fed", size = 3654 },
 ]
 
 [[package]]
@@ -4267,6 +4181,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/8c/b2/f96297cf76b072af9f11f750e25dc2addfe0faacc42a76e0d8ed1808ae78/sqlglot-26.13.0.tar.gz", hash = "sha256:f6d45784ab6ba03c37f3a87fdea563d3ff6bfa505d1c897abede72877530f31d", size = 5346071 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/52/2b/956dcb9f7545a414e5597cdcea1c0db2499d7163585fb938768b67abc3a9/sqlglot-26.13.0-py3-none-any.whl", hash = "sha256:261296eb9b99e68bdf05df845579a183df3236926a93e87f85e03ac929606683", size = 457336 },
+]
+
+[[package]]
+name = "standard-imghdr"
+version = "3.13.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/1a/8d/ab2620fbe2e348483c9cb776c3b7b3cc407899291a041d7fa026469b7cd1/standard_imghdr-3.13.0.tar.gz", hash = "sha256:8d9c68058d882f6fc3542a8d39ef9ff94d2187dc90bd0c851e0902776b7b7a42", size = 5511 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/df/cb/e1da7e340586a078404c7e4328bfefc930867ace8a9a55916fd220cf9547/standard_imghdr-3.13.0-py3-none-any.whl", hash = "sha256:30a1bff5465605bb496f842a6ac3cc1f2131bf3025b0da28d4877d6d4b7cc8e9", size = 4639 },
 ]
 
 [[package]]
