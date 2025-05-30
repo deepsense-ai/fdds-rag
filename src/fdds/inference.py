@@ -1,18 +1,27 @@
 import asyncio
+import logging
 import sys
+from fdds.reranker import LLMReranker
 
 from pydantic import BaseModel
+from ragbits.chat.history.compressors.llm import (
+    StandaloneMessageCompressor,
+    LastMessageAndHistory,
+)
 from ragbits.core.embeddings.litellm import LiteLLMEmbedder
-from ragbits.core.llms.litellm import LiteLLM
+from ragbits.core.llms.litellm import LiteLLM, LiteLLMOptions
 from ragbits.core.prompt import ChatFormat, Prompt
 from ragbits.core.vector_stores.qdrant import QdrantVectorStore
 from ragbits.document_search import DocumentSearch, SearchConfig
 from ragbits.document_search.documents.element import Element
-from ragbits.conversations.history.compressors.llm import StandaloneMessageCompressor
+
 from typing import AsyncGenerator
 from qdrant_client import AsyncQdrantClient
 
 from fdds import config
+
+logger = logging.getLogger(__name__)
+options = LiteLLMOptions(max_tokens=config.MAX_NEW_TOKENS)
 
 
 class QueryWithContext(BaseModel):
@@ -71,6 +80,43 @@ class RAGPrompt(Prompt[QueryWithContext]):
     """
 
 
+class CompressorPrompt(Prompt[LastMessageAndHistory, str]):
+    """
+    A prompt for recontextualizing the last message in the history.
+    """
+
+    system_prompt = """
+    Your task is to rewrite the most recent user message so that
+    it is fully self-contained and understandable on its own.
+
+    You are provided with:
+    - The most recent user message ("Message").
+    - A list of previous messages ("History"), ordered from most recent to oldest.
+
+    If the latest message contains references to previous messages
+    (e.g., using pronouns like "he", "it", or phrases like "as I said earlier"),
+    you must resolve those references using the history.
+    When resolving ambiguous references,
+    always prefer the most recent applicable message.
+
+    Return ONLY the rewritten, self-contained version of the latest message.
+
+    Do NOT include the message history in your output.
+    Do NOT answer the message.
+    Do NOT change the meaning or add new information.
+    """
+
+    user_prompt = """
+    Message:
+    {{ last_message }}
+
+    History:
+    {% for message in history[::-1] %}
+    - {{ message }}
+    {% endfor %}
+    """
+
+
 def prepare_context(context: Element) -> str:
     text = (
         f"{context.text_representation} "
@@ -80,7 +126,9 @@ def prepare_context(context: Element) -> str:
     return text
 
 
-async def get_contexts(question: str, top_k: int) -> list[str]:
+async def get_contexts(
+    question: str, top_k: int, top_n: int
+) -> tuple[list[str], set[str]]:
     """
     Retrieve the most relevant context documents for a given question
     using a vector store.
@@ -94,9 +142,16 @@ async def get_contexts(question: str, top_k: int) -> list[str]:
             The question to search for relevant contexts.
         top_k (int):
             The number of top relevant contexts to retrieve from the vector store.
+        top_n (int):
+            The maximum number of reranked contexts to return
+            after applying the reranker. The actual number returned may be fewer,
+            depending on relevance.
 
     Returns:
-        list[str]: A list of the top-k context strings.
+        tuple[list[str], set[str]]: A tuple containing two elements:
+            - A list of the top-k context strings.
+            - A set of unique sources (`set[str]`) corresponding to the context strings,
+            ensuring no duplicates.
 
     Dependencies:
         - LiteLLMEmbedder: Generates embeddings for the question.
@@ -106,62 +161,64 @@ async def get_contexts(question: str, top_k: int) -> list[str]:
         - LiteLLMReranker: Reranks the retrieved contexts for better relevance.
     """
     embedder = LiteLLMEmbedder(
-        model=config.EMBEDDING_MODEL,
+        model_name=config.EMBEDDING_MODEL,
     )
+    reranker = LLMReranker(
+        model_name=config.MODEL_NAME,
+    )
+
     qdrant_client = AsyncQdrantClient(
-        url=config.QDRANT_URL, api_key=config.QDRANT_API_KEY
+        url=config.QDRANT_URL,
+        port=config.QDRANT_PORT,
+        api_key=config.QDRANT_API_KEY,
+        check_compatibility=False,
     )
     vector_store = QdrantVectorStore(
         client=qdrant_client,
         index_name=config.COLLECTION_NAME,
         embedder=embedder,
     )
-    document_search = DocumentSearch(vector_store=vector_store)
+    document_search = DocumentSearch(vector_store=vector_store, reranker=reranker)
     contexts = await document_search.search(
         question,
-        SearchConfig(vector_store_kwargs={"k": top_k}),
+        SearchConfig(
+            vector_store_kwargs={"k": top_k},
+            reranker_kwargs={"top_n": top_n},
+        ),
     )
 
     texts = [prepare_context(context) for context in contexts]
-    return texts
+    sources = set([context.document_meta.source.url for context in contexts])
+    return texts, sources
 
 
 async def inference(query_with_history: ChatFormat) -> AsyncGenerator[str, None]:
-    """
-    Generate an AI-powered response to a query using retrieval-augmented generation.
+    llm = LiteLLM(
+        model_name=config.MODEL_NAME,
+        api_key=config.OPENAI_API_KEY,
+        default_options=options,
+    )
 
-    This function retrieves relevant contexts for the input query, optionally compresses
-    and includes the conversation history, constructs a prompt using the `RAGPrompt`
-    class, and generates a response using a language model. The response is streamed in
-    real-time in chunks.
-
-    Args:
-        query_with_history (ChatFormat):
-            The combined conversation history and current query
-            to be included in the response generation.
-
-    Yields:
-        str: Chunks of the generated response.
-
-    Dependencies:
-        - LiteLLM: Handles response generation from the language model.
-        - get_contexts: Fetches relevant contexts for the query.
-        - RAGPrompt: Creates a structured prompt with the query and contexts.
-        - StandaloneMessageCompressor:
-            Compresses the conversation input (history + query)
-            before appending it to the context.
-    """
-    llm = LiteLLM(model_name=config.MODEL_NAME, api_key=config.OPENAI_API_KEY)
-
-    compressor = StandaloneMessageCompressor(llm=llm)
+    compressor = StandaloneMessageCompressor(llm=llm, prompt=CompressorPrompt)
     query = await compressor.compress(query_with_history)
+    logger.info(
+        f"Query: {query_with_history[-1]['content']} -- "
+        f"Compressed query: {query} -- "
+        f"Without history: {len(query_with_history) == 1}"
+    )
 
-    context = await get_contexts(query, top_k=config.TOP_K)
+    context, sources = await get_contexts(query, top_k=config.TOP_K, top_n=config.TOP_N)
     stream = llm.generate_streaming(
         prompt=RAGPrompt(QueryWithContext(query=query, context=context)),
     )
     async for chunk in stream:
         yield chunk
+
+    if sources:
+        sources_str = "\n\nPowiązane materiały: \n" + "\n".join(
+            [f"- {source}" for source in sources]
+        )
+        yield sources_str
 
 
 def parse_query() -> ChatFormat:
