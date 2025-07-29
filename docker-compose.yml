@@ -9,12 +9,6 @@ services:
     environment:
       QDRANT__SERVICE__API_KEY: "${QDRANT_API_KEY}"
       QDRANT__SERVICE__GRPC_PORT: 6334
-    logging:
-      driver: "awslogs"
-      options:
-        awslogs-group: "/ecs/qdrant-log-group"
-        awslogs-stream: "qdrant-log-stream"
-        awslogs-region: "eu-north-1"
 
   jaeger:
     image: jaegertracing/all-in-one:latest
@@ -25,12 +19,6 @@ services:
     environment:
       COLLECTOR_OTLP_ENABLED: "true"
       LOG_LEVEL: "debug"
-    logging:
-      driver: "awslogs"
-      options:
-        awslogs-group: "/ecs/jaeger-log-group"
-        awslogs-stream: "jaeger-log-stream"
-        awslogs-region: "eu-north-1"
 
   fastapi:
     build: .
@@ -45,12 +33,6 @@ services:
     depends_on:
       - qdrant
       - jaeger
-    logging:
-      driver: "awslogs"
-      options:
-        awslogs-group: "/ecs/fastapi-log-group"
-        awslogs-stream: "fastapi-log-stream"
-        awslogs-region: "eu-north-1"
 
 volumes:
   qdrant_data:
