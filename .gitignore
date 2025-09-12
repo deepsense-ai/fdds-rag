@@ -34,3 +34,6 @@ Thumbs.db
 
 # pyenv Python version file
 .python-version
+app-data
+docker/fdds/data/qdrant
+docker/fdds/fdds.env
