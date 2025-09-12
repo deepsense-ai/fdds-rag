@@ -1,6 +1,6 @@
 import logging
-
 from pathlib import Path
+
 from pydantic import PositiveInt
 from pydantic_settings import BaseSettings
 
@@ -15,7 +15,6 @@ class Config(BaseSettings):
     OPENAI_API_KEY: str
     NEPTUNE_API_KEY: str
     QDRANT_API_KEY: str
-    API_KEY: str
 
     # MODELS
     EMBEDDING_MODEL: str = "text-embedding-3-small"
@@ -26,9 +25,9 @@ class Config(BaseSettings):
     API_URL: str = "http://localhost:8000"
 
     # DATA
-    QDRANT_URL: str = "http://56.228.7.65"  # "http://qdrant"
+    QDRANT_URL: str = "http://localhost"  # "http://qdrant"
     QDRANT_PORT: int = 6333
-    QDRANT_INGEST_URL: str = "http://56.228.7.65"
+    QDRANT_INGEST_URL: str = "http://localhost"
     COLLECTION_NAME: str = "fdds"
 
     EVAL_DATASET: Path = (
@@ -43,9 +42,11 @@ class Config(BaseSettings):
     TOP_N: PositiveInt = 5
 
     # LOGS AND MONITORING
+    JAEGER_ENABLED: bool = False
     JAEGER_URL: str = "http://jaeger:4317"
     logging.getLogger("LiteLLM").setLevel(logging.WARNING)
 
     class Config:
         env_file = Path(__file__).parent.parent.parent / ".env"
         env_file_encoding = "utf-8"
+        extra = "ignore"

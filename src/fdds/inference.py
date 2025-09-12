@@ -1,24 +1,23 @@
 import asyncio
 import logging
 import sys
-from fdds.reranker import LLMReranker
+from typing import AsyncGenerator
 
 from pydantic import BaseModel
+from qdrant_client import AsyncQdrantClient
 from ragbits.chat.history.compressors.llm import (
-    StandaloneMessageCompressor,
     LastMessageAndHistory,
+    StandaloneMessageCompressor,
 )
-from ragbits.core.embeddings.litellm import LiteLLMEmbedder
+from ragbits.core.embeddings import LiteLLMEmbedder
 from ragbits.core.llms.litellm import LiteLLM, LiteLLMOptions
 from ragbits.core.prompt import ChatFormat, Prompt
 from ragbits.core.vector_stores.qdrant import QdrantVectorStore
-from ragbits.document_search import DocumentSearch, SearchConfig
+from ragbits.document_search import DocumentSearch, DocumentSearchOptions
 from ragbits.document_search.documents.element import Element
 
-from typing import AsyncGenerator
-from qdrant_client import AsyncQdrantClient
-
 from fdds import config
+from fdds.reranker import LLMReranker
 
 logger = logging.getLogger(__name__)
 options = LiteLLMOptions(max_tokens=config.MAX_NEW_TOKENS)
@@ -181,9 +180,9 @@ async def get_contexts(
     document_search = DocumentSearch(vector_store=vector_store, reranker=reranker)
     contexts = await document_search.search(
         question,
-        SearchConfig(
-            vector_store_kwargs={"k": top_k},
-            reranker_kwargs={"top_n": top_n},
+        DocumentSearchOptions(
+            vector_store_options={"k": top_k},
+            reranker_options={"top_n": top_n},
         ),
     )
 
