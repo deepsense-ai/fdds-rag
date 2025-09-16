@@ -61,27 +61,49 @@ uv sync
 ```
 pre-commit install
 ```
-### 4. Configure settings:
-Ensure you created a `.env` file in the project root directory with all needed variables which are listed below:
+### 4. Start the system:
+Use the automated startup script to launch the system. The script will handle environment configuration and service startup:
+
+```bash
+./start.sh
 ```
-OPEN_API_KEY=<your_api_key>
-NEPTUNE_API_KEY=<your_api_key>
-QDRANT_API_KEY=<your_api_key>
-API_KEY=<your_api_key>
+
+#### Startup Script Options:
+- `--help` - Show all available options
+- `--with-ingest` - Include ingestion service to process PDFs
+- `--with-ingest-file FILE` - Use custom PDF file list for ingestion
+- `--detached` - Run services in background mode
+- `--jaeger` - Enable Jaeger tracing
+- `--port PORT` - Set API port (default: 8000)
+- `--host HOST` - Set API host (default: 0.0.0.0)
+- `--data-path PATH` - Set data mount path (default: ./app-data)
+- `--env-file FILE` - Load environment variables from file
+- `--env KEY=VALUE` - Set individual environment variables
+
+#### Examples:
+```bash
+# Basic startup with ingestion
+./start.sh --with-ingest
+
+# Custom port and detached mode
+./start.sh --with-ingest --port 9000 --detached
+
+# Use custom PDF list
+./start.sh --with-ingest-file my-pdfs.txt
+
+# Load environment from file
+./start.sh --env-file .env.prod --with-ingest
 ```
-Replace the placeholders with your actual credentials and settings, and modify `src/fdds/config.py` to ensure it holds all necessary configurations like paths and connection details.
-### 5. Start the system:
-Before proceeding, ensure that Docker is running on your machine. Then, start the services using:
-```
-docker-compose up -d
-```
-This command will initialize and run three services in detached mode:
-- Qdrant: Vector database
-- API: Handles model inference and provides the assistant interface
-- Jaeger: Monitoring and tracing system
-All service ports are configured in `config.py` and `docker-compose.yml`.
--
-### 6. Retrieve PDF File Links:
+
+The script will:
+- Prompt for OpenAI API key if not found in environment
+- Generate secure API keys for internal services
+- Create the data directory and environment configuration
+- Start Docker services (Qdrant, API, and optionally Jaeger/Ingestion)
+
+**Note:** Ensure Docker is running before executing the script.
+
+### 5. Retrieve PDF File Links (Optional):
 If you don't already have a list of PDF URLs to ingest, you can generate one by running the web scraping script:
 ```bash
 cd scripts/fdds_scrapper
@@ -91,7 +113,7 @@ This will crawl and extract all PDF file links from the sections specified in th
 The collected links will be saved as: `scripts/fdds_scrapper/pdfs.txt`.
 > **Note:** To customize which sections are scraped, modify the start_urls list in `pdf_spider.py`.
 
-### 7. Manage PDF Files in Qdrant (Ingest & Delete):
+### 6. Manage PDF Files in Qdrant (Optional):
 To load PDF documents into the Qdrant database, prepare a .txt file containing one PDF URL per line (no delimiters or special characters). If you followed the previous step, this file is already generated.
 To ingest the documents, run:
 ```bash
